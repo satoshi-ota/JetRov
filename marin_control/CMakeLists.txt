@@ -19,7 +19,7 @@ find_package(catkin REQUIRED COMPONENTS
 
 
 catkin_package(
-  INCLUDE_DIRS include
+  #INCLUDE_DIRS include
   LIBRARIES marin_control
   CATKIN_DEPENDS geometry_msgs nav_msgs roscpp rospy sensor_msgs std_msgs tf marin_msgs
   DEPENDS system_lib

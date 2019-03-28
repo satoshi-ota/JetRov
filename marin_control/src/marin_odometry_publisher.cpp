@@ -57,7 +57,7 @@ public:
     current_time = ros::Time::now();
     last_time = ros::Time::now();
 
-    sub = private_nh.subscribe ("/robot_state", 1, &ODOMPub::OdomPubCB, this);
+    sub = private_nh.subscribe ("/robot_status", 1, &ODOMPub::OdomPubCB, this);
     pub = private_nh.advertise<nav_msgs::Odometry> ("/odom", 0);
   }
 

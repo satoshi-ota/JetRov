@@ -4,4 +4,7 @@
 
   <!--- Run gmapping -->
   <include file="$(find marin_navigation)/launch/gmapping.launch" />
+
+  <!--- Run gmapping -->
+  <include file="$(find marin_joy)/launch/joy.launch" />
 </launch>

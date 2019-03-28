@@ -70,8 +70,8 @@ void output(){
   control_amount += control_input;
 
   old_error = current_error;
-  control_amount = min(150, control_amount);
-  control_amount = max(-150, control_amount);
+  control_amount = min(500, control_amount);
+  control_amount = max(-500, control_amount);
   motor_control_val = control_amount + NEUTRAL;
   steer_servo_val = 90 + tgt_angle  / 30 * 90;
   steer_servo_val = min(180, steer_servo_val);
@@ -112,12 +112,12 @@ void setup() {
   while(!nh.connected()) {nh.spinOnce();}
 
   //getParams
-  if (!nh.getParam("feedback_gain_p", &feedback_gain_p, 3)){
-    feedback_gain_p = 0.08;
+  if (!nh.getParam("feedback_gain_p", &feedback_gain_p)){
+    feedback_gain_p = 0.2;
   }
 
-  if (!nh.getParam("feedback_gain_i", &feedback_gain_i, 3)){
-    feedback_gain_i = 0.04;
+  if (!nh.getParam("feedback_gain_i", &feedback_gain_i)){
+    feedback_gain_i = 0.08;
   }
 
   setPIDparam();

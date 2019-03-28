@@ -3,7 +3,16 @@
 
   <!--- Run gmapping -->
   <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping">
-    <rosparam file="$(find marin_navigation)/param/gmapping/gmapping_params.yaml" command="load" />
+    <!--rosparam file="$(find marin_navigation)/param/gmapping/gmapping_params.yaml" command="load" /-->
+    <param name="inverted_laser" value="true" />
+    <param name="base_frame" value="base_footprint" />
+    <param name="map_update_interval" value="0.5" />
+    <param name="maxUrange" value="15" />
+    <param name="maxrange" value="18" />
+    <param name="linearUpdate" value="0.1" />
+    <param name="angularUpdate" value="0.1" />
+    <param name="minimumScore" value="200" />
+    <param name="particles" value="80" />
     <remap from="scan" to="$(arg scan_topic)"/>
   </node>
 </launch>

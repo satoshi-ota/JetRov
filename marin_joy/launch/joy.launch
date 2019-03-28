@@ -1,0 +1,4 @@
+<launch>
+  <node pkg="joy" type="joy_node" name="joy_node"/>
+  <node pkg="marin_joy" type="joystick_controller" name="joystick_controller"/>
+</launch>
