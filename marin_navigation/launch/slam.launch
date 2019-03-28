@@ -1,0 +1,7 @@
+<launch>
+  <!--- Run controller -->
+  <include file="$(find marin_control)/launch/control.launch" />
+
+  <!--- Run gmapping -->
+  <include file="$(find marin_navigation)/launch/gmapping.launch" />
+</launch>

@@ -1,0 +1,9 @@
+<launch>
+  <arg name="scan_topic" default="scan" />
+
+  <!--- Run gmapping -->
+  <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping">
+    <rosparam file="$(find marin_navigation)/param/gmapping/gmapping_params.yaml" command="load" />
+    <remap from="scan" to="$(arg scan_topic)"/>
+  </node>
+</launch>
