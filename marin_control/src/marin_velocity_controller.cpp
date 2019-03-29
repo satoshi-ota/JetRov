@@ -20,7 +20,7 @@ private:
 public:
   CTRL()
   {
-    // **** get paramters
+    //get paramters
     if (!private_nh.getParam ("encoder_ppr", enc_ppr))
       enc_ppr = 1440;
     if (!private_nh.getParam ("encoder_diameter", enc_dia))
@@ -31,7 +31,7 @@ public:
       whl_base = 0.48;
 
     sub = private_nh.subscribe ("/cmd_vel", 1, &CTRL::ctrlCB, this);
-    pub = private_nh.advertise<marin_msgs::MarinCtrl> ("/ackermann_cmd", 0);
+    pub = private_nh.advertise<marin_msgs::MarinCtrl> ("/ackermann_cmd_vel", 0);
   }
 
   void ctrlCB (const geometry_msgs::Twist& msg)

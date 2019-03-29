@@ -15,7 +15,7 @@ public:
   Joy()
   {
     sub = private_nh.subscribe ("/joy", 1, &Joy::joy_cb, this);
-    pub = private_nh.advertise<marin_msgs::MarinCtrl> ("/ackermann_cmd", 0);
+    pub = private_nh.advertise<marin_msgs::MarinCtrl> ("/ackermann_cmd_vel", 0);
   }
   void joy_cb (const sensor_msgs::Joy& input_msg)
   {

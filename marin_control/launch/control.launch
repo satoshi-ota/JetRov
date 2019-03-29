@@ -4,14 +4,14 @@
 
   <!--Arduino rosserial-->
   <node name="serial_imu_node" pkg="rosserial_python" type="serial_node.py" output="screen">
-    <param name="port" value="/dev/ttyACM0" />
+    <param name="port" value="/dev/ttyARD0" />
     <param name="baud" value="115200" />
   </node>
   <node name="serial_control_node" pkg="rosserial_python" type="serial_node.py" output="screen">
-    <param name="port" value="/dev/ttyACM1" />
+    <param name="port" value="/dev/ttyARD1" />
     <param name="baud" value="115200" />
-    <!--param name="feedback_gain_p" value="$(arg feedback_gain_p)" /-->
-    <!--param name="feedback_gain_i" value="$(arg feedback_gain_i)" /-->
+    <param name="feedback_gain_p" value="$(arg feedback_gain_p)" />
+    <param name="feedback_gain_i" value="$(arg feedback_gain_i)" />
   </node>
 
   <!--imu-->
@@ -37,8 +37,8 @@
   </node>
 
   <!--tf-->
-  <node pkg="tf" type="static_transform_publisher" name="base_link_to_laser4"
-    args="0.2245 0.0 0.2 0.0 0.0 0.0 /base_footprint /base_scan 40" />
+  <node pkg="tf" type="static_transform_publisher" name="base_link_to_laser"
+    args="0.225 0.0 0.6 0.0 0.0 0.0 /base_footprint /base_scan 40" />
 
   <!--Visualyzer-->
   <node pkg="rviz" type="rviz" name="rviz"/>

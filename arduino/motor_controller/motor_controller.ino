@@ -92,7 +92,7 @@ void setRobotData() {
   output_msgs.current_servo_val =  steer_servo_val;
 }
 
-ros::Subscriber<marin_msgs::MarinCtrl> sub("/ackermann_cmd", &setTargetCB);
+ros::Subscriber<marin_msgs::MarinCtrl> sub("/ackermann_cmd_vel", &setTargetCB);
 
 void setup() {
   Serial.begin(115200);
@@ -112,12 +112,12 @@ void setup() {
   while(!nh.connected()) {nh.spinOnce();}
 
   //getParams
-  if (!nh.getParam("feedback_gain_p", &feedback_gain_p)){
-    feedback_gain_p = 0.2;
+  if (!nh.getParam("feedback_gain_p", &feedback_gain_p, 2)){
+    feedback_gain_p = 0.3;
   }
 
-  if (!nh.getParam("feedback_gain_i", &feedback_gain_i)){
-    feedback_gain_i = 0.08;
+  if (!nh.getParam("feedback_gain_i", &feedback_gain_i, 2)){
+    feedback_gain_i = 0.1;
   }
 
   setPIDparam();
