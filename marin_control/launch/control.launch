@@ -38,7 +38,7 @@
 
   <!--tf-->
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_laser"
-    args="0.225 0.0 0.6 0.0 0.0 0.0 /base_footprint /base_scan 40" />
+    args="0.225 0.0 0.0 0.0 0.0 0.0 /base_footprint /base_scan 40" />
 
   <!--Visualyzer-->
   <node pkg="rviz" type="rviz" name="rviz"/>

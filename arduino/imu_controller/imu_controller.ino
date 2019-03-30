@@ -3,7 +3,7 @@
 #include <Wire.h>
 #include <std_msgs/Float32.h>
 
-#define OFFSET_GYRO_Z 80
+#define OFFSET_GYRO_Z 70
 
 ros::NodeHandle nh;
 std_msgs::Float32 yaw_rate;
