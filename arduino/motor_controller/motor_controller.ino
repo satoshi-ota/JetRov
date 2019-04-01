@@ -70,8 +70,8 @@ void output(){
   control_amount += control_input;
 
   old_error = current_error;
-  control_amount = min(500, control_amount);
-  control_amount = max(-500, control_amount);
+  control_amount = min(250, control_amount);
+  control_amount = max(-250, control_amount);
   motor_control_val = control_amount + NEUTRAL;
   steer_servo_val = 90 + tgt_angle  / 30 * 90;
   steer_servo_val = min(180, steer_servo_val);
