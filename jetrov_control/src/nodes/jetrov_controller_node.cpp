@@ -40,8 +40,8 @@ void JetrovControllerNode::InitializePCA9885()
 
 void JetrovControllerNode::DesireTwistCB(const geometry_msgs::TwistPtr& twist_msg)
 {
-    int tgt_pulse;
-    ComputeTargetPulse(twist_msg, &tgt_pulse);
+    int tgt_pulse
+    = twist_msg->linear.x / CONTROL_FREQUENCY / ENCODER_WHEEL_DIAMETER  / M_PI * ENCODER_RESOLUTION;
     speed_controller_.SetTargetPulse(tgt_pulse);
 
     int output = speed_controller_.getOutput();

@@ -16,7 +16,7 @@ catkin_package(
     INCLUDE_DIRS include
     LIBRARIES jetrov_control
     CATKIN_DEPENDS geometry_msgs nav_msgs roscpp rospy sensor_msgs std_msgs tf
-    DEPENDS system_lib
+    DEPENDS
 )
 
 include_directories(

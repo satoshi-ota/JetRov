@@ -48,13 +48,6 @@ int map(int x, int in_min, int in_max, int out_min, int out_max)
     return toReturn ;
 }
 
-void ComputeTargetPulse(const geometry_msgs::TwistPtr& msg,
-                              int* tgt_pulse)
-{
-    //tgt_pulse
-    //= msg.linear.x / CONTROL_FREQUENCY / ENCODER_WHEEL_DIAMETER  / M_PI * ENCODER_RESOLUTION;
-}
-
 }  // end namespace jetrov_control
 
 #endif // JETROV_CONTROL_COMMON_H
