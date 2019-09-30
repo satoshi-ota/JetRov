@@ -9,37 +9,29 @@ find_package(catkin REQUIRED COMPONENTS
   sensor_msgs
   std_msgs
   tf
-  marin_msgs
 )
 
- generate_messages(
-   DEPENDENCIES marin_msgs
-   geometry_msgs   nav_msgs   sensor_msgs   std_msgs
- )
-
-
 catkin_package(
-  #INCLUDE_DIRS include
-  LIBRARIES marin_control
-  CATKIN_DEPENDS geometry_msgs nav_msgs roscpp rospy sensor_msgs std_msgs tf marin_msgs
-  DEPENDS system_lib
+    INCLUDE_DIRS include
+    LIBRARIES jetrov_control
+    CATKIN_DEPENDS geometry_msgs nav_msgs roscpp rospy sensor_msgs std_msgs tf
+    DEPENDS system_lib
 )
 
 include_directories(
- include
-  ${catkin_INCLUDE_DIRS}
+    include
+    ${catkin_INCLUDE_DIRS}
 )
 
 include_directories(include ${catkin_INCLUDE_DIRS})
 
-add_executable(marin_imu_node src/marin_imu_node.cpp)
-target_link_libraries(marin_imu_node ${catkin_LIBRARIES})
+add_library(jetrov_control
+    src/library/JHPWMPCA9685.cpp
+    src/library/speed_controller.cpp)
 
-add_executable(marin_odometry_publisher src/marin_odometry_publisher.cpp)
-target_link_libraries(marin_odometry_publisher ${catkin_LIBRARIES})
+target_link_libraries(jetrov_control ${catkin_LIBRARIES})
+add_dependencies(jetrov_control ${catkin_EXPORTED_TARGETS})
 
-add_executable(marin_state_publisher src/marin_state_publisher.cpp)
-target_link_libraries(marin_state_publisher ${catkin_LIBRARIES})
-
-add_executable(marin_velocity_controller src/marin_velocity_controller.cpp)
-target_link_libraries(marin_velocity_controller ${catkin_LIBRARIES})
+add_executable(jetrov_controller_node src/nodes/jetrov_controller_node.cpp)
+add_dependencies(jetrov_controller_node ${catkin_EXPORTED_TARGETS})
+target_link_libraries(jetrov_controller_node jetrov_control ${catkin_LIBRARIES})
