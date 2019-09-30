@@ -18,24 +18,27 @@ public:
 
     void ComputeESCOutput();
 
-    inline void SetTargetPulse(const std_msgs::Int32& tgt_pulse){tgt_pulse_ = tgt_pulse;};
-    inline void SetCurrentPulse(const std_msgs::Int32& current_pulse){current_pulse_ = current_pulse;};
+    inline void SetTargetPulse(const int& tgt_pulse){tgt_pulse_ = tgt_pulse;};
+    inline void SetCurrentPulse(const int& current_pulse){current_pulse_ = current_pulse;};
 
-    inline std_msgs::Int32 getOutput(){return output_;};
+    inline int getOutput(){return output_;};
 
 private:
+    double Kp_;
+    double Ki_;
+
     //target_pulse
-    std_msgs::Int32 tgt_pulse_;
+    int tgt_pulse_;
 
     //feedback_pulse
-    std_msgs::Int32 current_pulse_;
+    int current_pulse_;
 
     //pulse error
-    std_msgs::Int32 current_error_;
-    std_msgs::Int32 previous_error_;
+    int current_error_;
+    int previous_error_;
 
     //contoller output
-    std_msgs::Int32 output_;
+    int output_;
 
 };
 

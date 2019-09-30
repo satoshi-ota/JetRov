@@ -4,6 +4,8 @@
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
 
+#include "jetrov_control/speed_controller.h"
+
 namespace jetrov_control
 {
 
@@ -13,6 +15,7 @@ public:
     JetrovControllerNode(const ros::NodeHandle& nh, const ros::NodeHandle& private_nh);
     ~JetrovControllerNode();
 
+    void InitializePWM();
     void InitializePCA9885();
 
 private:

@@ -1,6 +1,5 @@
 #include "jetrov_controller_node.h"
 
-using namespace jetrov_const;
 namespace jetrov_control
 {
 
@@ -15,7 +14,7 @@ JetrovControllerNode::JetrovControllerNode(
 
 JetrovControllerNode::~JetrovControllerNode(){ }
 
-JetrovControllerNode::InitializePWM()
+void JetrovControllerNode::InitializePWM()
 {
     esc_input_max_ = PWM_RESOLUTON * CONTROL_FREQUENCY * ESC_PULSE_WIDTH_MAX * 10e-6;
     esc_input_min_ = PWM_RESOLUTON * CONTROL_FREQUENCY * ESC_PULSE_WIDTH_MIN * 10e-6;
@@ -23,40 +22,45 @@ JetrovControllerNode::InitializePWM()
     servo_input_min_ = PWM_RESOLUTON * CONTROL_FREQUENCY * STEER_SERVO_PULSE_WIDTH_MIN * 10e-6;
 }
 
-JetrovControllerNode::InitializePCA9885()
+void JetrovControllerNode::InitializePCA9885()
 {
     int err = pca9685->openPCA9685();
-    if (err < 0){
+    if (err < 0)
+    {
         printf("Error: %d", pca9685->error);
-    } else {
+    }
+    else
+    {
         printf("PCA9685 Device Address: 0x%02X\n",pca9685->kI2CAddress) ;
         pca9685->setAllPWM(0,0);
         pca9685->reset();
         pca9685->setPWMFrequency(CONTROL_FREQUENCY);
+    }
 }
 
-JetrovControllerNode::DesireTwistCB(const geometry_msgs::TwistPtr& twist_msg)
+void JetrovControllerNode::DesireTwistCB(const geometry_msgs::TwistPtr& twist_msg)
 {
     int tgt_pulse;
     ComputeTargetPulse(twist_msg, &tgt_pulse);
     speed_controller_.SetTargetPulse(tgt_pulse);
 
     int output = speed_controller_.getOutput();
-    output = min(ESC_OUTPUT_MAX, output);
-    output = max(ESC_OUTPUT_MIN, output);
+    output = std::min(ESC_OUTPUT_MAX, output);
+    output = std::max(ESC_OUTPUT_MIN, output);
 
-    int output_pwm = map(output, ESC_OUTPUT_MIN, ESC_OUTPUT_MAX, esc_input_min_, esc_input_max_);
+    double output_pwm = map(output, ESC_OUTPUT_MIN, ESC_OUTPUT_MAX, esc_input_min_, esc_input_max_);
     pca9685->setPWM(1, 0, output_pwm);
 }
 
-JetrovControllerNode::CurrentPulseCB(const std_msgs::Int32Ptr& pulse_msg)
+void JetrovControllerNode::CurrentPulseCB(const std_msgs::Int32Ptr& pulse_msg)
 {
     speed_controller_.SetCurrentPulse(pulse_msg->data);
 }
 
 } //namespace jetrov_control
 
-int main(int argc, char** argv) {
+int main(int argc, char** argv)
+{
   ros::init(argc, argv, "jetrov_controller_node");
 
   ros::NodeHandle nh;

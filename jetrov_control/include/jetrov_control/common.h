@@ -14,7 +14,6 @@
 #include "jetrov_control/JHPWMPCA9685.h"
 #include "jetrov_control/const.h"
 
-namespace jetrov_const{
 namespace jetrov_control{
 
 int getkey()
@@ -49,14 +48,13 @@ int map(int x, int in_min, int in_max, int out_min, int out_max)
     return toReturn ;
 }
 
-void ComputeTargetPulse(const geometry_msgs::TwistPtr& twist_msg,
+void ComputeTargetPulse(const geometry_msgs::TwistPtr& msg,
                               int* tgt_pulse)
 {
-    tgt_pulse
-    = twist_msg->linear.x / CONTROL_FREQUENCY / ENCODER_WHEEL_DIAMETER  / M_PI * ENCODER_RESOLUTION;
+    //tgt_pulse
+    //= msg.linear.x / CONTROL_FREQUENCY / ENCODER_WHEEL_DIAMETER  / M_PI * ENCODER_RESOLUTION;
 }
 
-}
 }  // end namespace jetrov_control
 
 #endif // JETROV_CONTROL_COMMON_H

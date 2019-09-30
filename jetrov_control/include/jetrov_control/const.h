@@ -1,7 +1,6 @@
 #ifndef JETROV_CONTROL_CONST_H
 #define JETROV_CONTROL_CONST_H
 
-namespace jetrov_const{
 namespace jetrov_control{
 
 //encoder
@@ -38,6 +37,5 @@ static constexpr int STEER_SERVO_OUTPUT_MAX = 255;
 static constexpr int STEER_SERVO_OUTPUT_MIN = 0;
 
 }  //namespace jetrov_control
-} //namespace jetrov_const
 
 #endif // JETROV_CONTROL_CONST_H
