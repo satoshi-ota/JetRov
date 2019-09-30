@@ -10,6 +10,9 @@ JetrovControllerNode::JetrovControllerNode(
 {
     twist_sub_ = nh_.subscribe("cmd_vel", 1, &JetrovControllerNode::DesireTwistCB, this);
     pulse_sub_ = nh_.subscribe("enc_pulse", 1, &JetrovControllerNode::CurrentPulseCB, this);
+
+    InitializePWM();
+    InitializePCA9885();
 }
 
 JetrovControllerNode::~JetrovControllerNode(){ }
@@ -43,6 +46,8 @@ void JetrovControllerNode::DesireTwistCB(const geometry_msgs::TwistPtr& twist_ms
     int tgt_pulse
     = twist_msg->linear.x / CONTROL_FREQUENCY / ENCODER_WHEEL_DIAMETER  / M_PI * ENCODER_RESOLUTION;
     speed_controller_.SetTargetPulse(tgt_pulse);
+
+    speed_controller_.ComputeESCOutput();
 
     int output = speed_controller_.getOutput();
     output = std::min(ESC_OUTPUT_MAX, output);
