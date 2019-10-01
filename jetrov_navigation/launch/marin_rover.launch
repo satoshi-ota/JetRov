@@ -1,10 +1,10 @@
 <launch>
   <!--- Run controller -->
-  <include file="$(find marin_control)/launch/control.launch" />
+  <include file="$(find jetrov_control)/launch/control.launch" />
 
   <!--- Run gmapping -->
-  <include file="$(find marin_navigation)/launch/gmapping.launch" />
+  <include file="$(find jetrov_navigation)/launch/gmapping.launch" />
 
   <!--- Run move_base -->
-  <include file="$(find marin_navigation)/launch/move_base.launch" />
+  <include file="$(find jetrov_navigation)/launch/move_base.launch" />
 </launch>

@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>marin_description</name>
+  <name>jetrov_description</name>
   <version>0.0.0</version>
-  <description>The marin_description package</description>
+  <description>The jetrov_description package</description>
   <maintainer email="satoshi.ota928@gmail.com">Ota Satoshi</maintainer>
   <author>Ota Satoshi</author>
   <license>MIT License</license>
@@ -11,5 +11,5 @@
   <build_depend>urdf</build_depend>
   <build_export_depend>urdf</build_export_depend>
   <exec_depend>urdf</exec_depend>
-  
+
 </package>

@@ -5,14 +5,14 @@
   <arg name="odom_topic" default="odom" />
 
   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
-    <rosparam file="$(find marin_navigation)/param/move_base/costmap_common_params.yaml" command="load" ns="global_costmap" />
-    <rosparam file="$(find marin_navigation)/param/move_base/costmap_common_params.yaml" command="load" ns="local_costmap" />
-    <rosparam file="$(find marin_navigation)/param/move_base/local_costmap_params.yaml" command="load" />
-    <rosparam file="$(find marin_navigation)/param/move_base/global_costmap_params.yaml" command="load" />
-    <rosparam file="$(find marin_navigation)/param/move_base/base_local_planner_params.yaml" command="load"/>
-    <rosparam file="$(find marin_navigation)/param/move_base/move_base_params.yaml" command="load"/>
-    <rosparam file="$(find marin_navigation)/param/move_base/global_planner_params.yaml" command="load" />
-    <rosparam file="$(find marin_navigation)/param/move_base/navfn_global_planner_params.yaml" command="load" />
+    <rosparam file="$(find jetrov_navigation)/param/move_base/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find jetrov_navigation)/param/move_base/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find jetrov_navigation)/param/move_base/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find jetrov_navigation)/param/move_base/global_costmap_params.yaml" command="load" />
+    <rosparam file="$(find jetrov_navigation)/param/move_base/base_local_planner_params.yaml" command="load"/>
+    <rosparam file="$(find jetrov_navigation)/param/move_base/move_base_params.yaml" command="load"/>
+    <rosparam file="$(find jetrov_navigation)/param/move_base/global_planner_params.yaml" command="load" />
+    <rosparam file="$(find jetrov_navigation)/param/move_base/navfn_global_planner_params.yaml" command="load" />
 
 
     <!-- reset frame_id parameters using user input data -->
