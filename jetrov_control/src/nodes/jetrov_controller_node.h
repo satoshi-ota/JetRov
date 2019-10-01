@@ -18,6 +18,9 @@ public:
     void InitializePWM();
     void InitializePCA9885();
 
+    void ControlESC();
+    void ControlSteerServo();
+
 private:
     //general
     ros::NodeHandle nh_;
@@ -34,6 +37,7 @@ private:
 
     //class
     SpeedController speed_controller_;
+    SteerController steer_controller_;
     PCA9685 *pca9685 = new PCA9685();
 
     //subscriber

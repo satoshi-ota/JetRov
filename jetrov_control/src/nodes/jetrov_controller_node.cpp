@@ -41,10 +41,10 @@ void JetrovControllerNode::InitializePCA9885()
     }
 }
 
-void JetrovControllerNode::DesireTwistCB(const geometry_msgs::TwistPtr& twist_msg)
+void JetrovControllerNode::ControlESC()
 {
     int tgt_pulse
-    = twist_msg->linear.x / CONTROL_FREQUENCY / ENCODER_WHEEL_DIAMETER  / M_PI * ENCODER_RESOLUTION;
+    = twist_msg_.linear.x / CONTROL_FREQUENCY / ENCODER_WHEEL_DIAMETER  / M_PI * ENCODER_RESOLUTION;
     speed_controller_.SetTargetPulse(tgt_pulse);
 
     speed_controller_.ComputeESCOutput();
@@ -57,9 +57,34 @@ void JetrovControllerNode::DesireTwistCB(const geometry_msgs::TwistPtr& twist_ms
     pca9685->setPWM(1, 0, output_pwm);
 }
 
+void JetrovControllerNode::ControlSteerServo()
+{
+    double vel = twist_msg_.linear.x;
+    double omega = twist_msg_.anguler.z;
+    steer_controller_.SetLinearVel(vel, omega);
+
+    steer_controller_.Vel2SteerAngle();
+
+    double steer_angle = steer_controller_.GetSteerAngle();
+    double output = steer_angle / MAX_STEER_ANGLE;
+    output = std::min(STEER_SERVO_OUTPUT_MAX, output);
+    output = std::max(STEER_SERVO_OUTPUT_MIN, output);
+
+    double output_pwm = map(output, STEER_SERVO_OUTPUT_MIN, STEER_SERVO_OUTPUT_MAX, servo_input_min_, servo_input_max_);
+    pca9685->setPWM(0, 0, output_pwm);
+}
+
+void JetrovControllerNode::DesireTwistCB(const geometry_msgs::TwistPtr& twist_msg)
+{
+    twist_msg_ = twist_msg;
+}
+
 void JetrovControllerNode::CurrentPulseCB(const std_msgs::Int32Ptr& pulse_msg)
 {
     speed_controller_.SetCurrentPulse(pulse_msg->data);
+
+    ControlESC();
+    ControlSteerServo();
 }
 
 } //namespace jetrov_control

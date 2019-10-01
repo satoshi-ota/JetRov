@@ -3,6 +3,12 @@
 
 namespace jetrov_control{
 
+//steer rad
+static constexpr double MAX_STEER_ANGLE = 0.05;
+
+//wheel base m
+static constexpr double WHEEL_BASE = 0.48;
+
 //encoder
 //wheel diameter m
 static constexpr double ENCODER_WHEEL_DIAMETER = 0.05;
@@ -33,8 +39,8 @@ static constexpr int STEER_SERVO_PULSE_WIDTH_MAX = 2500;
 static constexpr int STEER_SERVO_PULSE_WIDTH_MIN = 500;
 
 //output range
-static constexpr int STEER_SERVO_OUTPUT_MAX = 255;
-static constexpr int STEER_SERVO_OUTPUT_MIN = 0;
+static constexpr int STEER_SERVO_OUTPUT_MAX = 1
+static constexpr int STEER_SERVO_OUTPUT_MIN = -1;
 
 }  //namespace jetrov_control
 
