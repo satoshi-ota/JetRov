@@ -19,13 +19,13 @@ public:
     void Vel2SteerAngle();
 
     inline void SetLinearVel(const double& vel){vel_ = vel;};
-    inline void SetAngulerVel(const double& omega){omega_ = omega;};
+    inline void SetangularVel(const double& omega){omega_ = omega;};
 
     inline double GetSteerAngle(){return steer_angle_;};
 
 private:
     double vel_; // linear x
-    double omega_; //anguler z
+    double omega_; //angular z
 
     double steer_angle_;　//rad
 

@@ -60,7 +60,7 @@ void JetrovControllerNode::ControlESC()
 void JetrovControllerNode::ControlSteerServo()
 {
     double vel = twist_msg_.linear.x;
-    double omega = twist_msg_.anguler.z;
+    double omega = twist_msg_.angular.z;
     steer_controller_.SetLinearVel(vel, omega);
 
     steer_controller_.Vel2SteerAngle();
