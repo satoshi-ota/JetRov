@@ -3,9 +3,11 @@
 
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
+#include <dynamic_reconfigure/server.h>
 
 #include "jetrov_control/speed_controller.h"
 #include "jetrov_control/steer_controller.h"
+#include "jetrov_control/JetrovControllerConfig.h"
 
 namespace jetrov_control
 {
@@ -18,6 +20,7 @@ public:
 
     void InitializePWM();
     void InitializePCA9885();
+    void ControllerReconfigureCB(pyramid_central::JetrovControllerConfig &config, uint32_t level);
 
     void ControlESC();
     void ControlSteerServo();

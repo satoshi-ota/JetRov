@@ -8,6 +8,13 @@ JetrovControllerNode::JetrovControllerNode(
     :nh_(nh),
      private_nh_(private_nh)
 {
+    //set up dynamic reconfigure
+    srv_ = boost::make_shared
+            <dynamic_reconfigure::Server<jetrov_control::JetrovControllerConfigConfig>>(private_nh);
+    dynamic_reconfigure::Server<jetrov_control::JetrovControllerConfig>::CallbackType cb
+        = boost::bind(&JetrovControllerNode::ControllerReconfigureCB, this, _1, _2);
+    srv_->setCallback(cb);
+
     twist_sub_ = nh_.subscribe("cmd_vel", 1, &JetrovControllerNode::DesireTwistCB, this);
     pulse_sub_ = nh_.subscribe("enc_pulse", 1, &JetrovControllerNode::CurrentPulseCB, this);
 
@@ -41,6 +48,14 @@ void JetrovControllerNode::InitializePCA9885()
     }
 }
 */
+
+void JetrovControllerNode::ControllerReconfigureCB(
+                                jetrov_control::JetrovControllerConfig &config,
+                                uint32_t level)
+{
+    speed_controller_.GainReconfig(config);
+}
+
 void JetrovControllerNode::ControlESC()
 {
     int tgt_pulse
@@ -48,10 +63,7 @@ void JetrovControllerNode::ControlESC()
     speed_controller_.SetTargetPulse(tgt_pulse);
 
     speed_controller_.ComputeESCOutput();
-
     int output = speed_controller_.getOutput();
-    output = std::min(ESC_OUTPUT_MAX, output);
-    output = std::max(ESC_OUTPUT_MIN, output);
 
     double output_pwm = map(output, ESC_OUTPUT_MIN, ESC_OUTPUT_MAX, esc_input_min_, esc_input_max_);
     //pca9685->setPWM(1, 0, output_pwm);

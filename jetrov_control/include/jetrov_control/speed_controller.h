@@ -3,9 +3,11 @@
 
 #include <ros/ros.h>
 #include <std_msgs/Int32.h>
+#include <dynamic_reconfigure/server.h>
 
 #include "jetrov_control/const.h"
 #include "jetrov_control/common.h"
+#include "jetrov_control/JetrovControllerConfig.h"
 
 namespace jetrov_control
 {
@@ -16,6 +18,7 @@ public:
     SpeedController();
     ~SpeedController();
 
+    void GainReconfig(jetrov_control::JetrovControllerConfig& config);
     void ComputeESCOutput();
 
     inline void SetTargetPulse(const int& tgt_pulse){tgt_pulse_ = tgt_pulse;};
