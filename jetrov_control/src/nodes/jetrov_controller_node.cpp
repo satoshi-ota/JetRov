@@ -12,7 +12,7 @@ JetrovControllerNode::JetrovControllerNode(
     pulse_sub_ = nh_.subscribe("enc_pulse", 1, &JetrovControllerNode::CurrentPulseCB, this);
 
     InitializePWM();
-    InitializePCA9885();
+    //InitializePCA9885();
 }
 
 JetrovControllerNode::~JetrovControllerNode(){ }
@@ -24,7 +24,7 @@ void JetrovControllerNode::InitializePWM()
     servo_input_max_ = PWM_RESOLUTON * CONTROL_FREQUENCY * STEER_SERVO_PULSE_WIDTH_MAX * 10e-6;
     servo_input_min_ = PWM_RESOLUTON * CONTROL_FREQUENCY * STEER_SERVO_PULSE_WIDTH_MIN * 10e-6;
 }
-
+/*
 void JetrovControllerNode::InitializePCA9885()
 {
     int err = pca9685->openPCA9685();
@@ -40,11 +40,11 @@ void JetrovControllerNode::InitializePCA9885()
         pca9685->setPWMFrequency(CONTROL_FREQUENCY);
     }
 }
-
+*/
 void JetrovControllerNode::ControlESC()
 {
     int tgt_pulse
-    = twist_msg_.linear.x / CONTROL_FREQUENCY / ENCODER_WHEEL_DIAMETER  / M_PI * ENCODER_RESOLUTION;
+    = linear_.x / CONTROL_FREQUENCY / ENCODER_WHEEL_DIAMETER  / M_PI * ENCODER_RESOLUTION;
     speed_controller_.SetTargetPulse(tgt_pulse);
 
     speed_controller_.ComputeESCOutput();
@@ -54,14 +54,17 @@ void JetrovControllerNode::ControlESC()
     output = std::max(ESC_OUTPUT_MIN, output);
 
     double output_pwm = map(output, ESC_OUTPUT_MIN, ESC_OUTPUT_MAX, esc_input_min_, esc_input_max_);
-    pca9685->setPWM(1, 0, output_pwm);
+    //pca9685->setPWM(1, 0, output_pwm);
+    std::cout << tgt_pulse << std::endl;
+    std::cout << output << std::endl;
 }
 
 void JetrovControllerNode::ControlSteerServo()
 {
-    double vel = twist_msg_.linear.x;
-    double omega = twist_msg_.angular.z;
-    steer_controller_.SetLinearVel(vel, omega);
+    double vel = linear_.x;
+    double omega = angular_.z;
+    steer_controller_.SetLinearVel(vel);
+    steer_controller_.SetAngularVel(omega);
 
     steer_controller_.Vel2SteerAngle();
 
@@ -71,12 +74,13 @@ void JetrovControllerNode::ControlSteerServo()
     output = std::max(STEER_SERVO_OUTPUT_MIN, output);
 
     double output_pwm = map(output, STEER_SERVO_OUTPUT_MIN, STEER_SERVO_OUTPUT_MAX, servo_input_min_, servo_input_max_);
-    pca9685->setPWM(0, 0, output_pwm);
+    //pca9685->setPWM(0, 0, output_pwm);
 }
 
 void JetrovControllerNode::DesireTwistCB(const geometry_msgs::TwistPtr& twist_msg)
 {
-    twist_msg_ = twist_msg;
+    linear_ = twist_msg->linear;
+    angular_ = twist_msg->angular;
 }
 
 void JetrovControllerNode::CurrentPulseCB(const std_msgs::Int32Ptr& pulse_msg)

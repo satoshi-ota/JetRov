@@ -39,8 +39,8 @@ static constexpr int STEER_SERVO_PULSE_WIDTH_MAX = 2500;
 static constexpr int STEER_SERVO_PULSE_WIDTH_MIN = 500;
 
 //output range
-static constexpr int STEER_SERVO_OUTPUT_MAX = 1;
-static constexpr int STEER_SERVO_OUTPUT_MIN = -1;
+static constexpr double STEER_SERVO_OUTPUT_MAX = 1;
+static constexpr double STEER_SERVO_OUTPUT_MIN = -1;
 
 }  //namespace jetrov_control
 

@@ -7,7 +7,10 @@ SpeedController::SpeedController()
     :Kp_(0.01),
      Ki_(0.01),
      tgt_pulse_(0),
-     current_pulse_(0){ }
+     current_pulse_(0),
+     current_error_(0),
+     previous_error_(0),
+     output_(0){ }
 
 SpeedController::~SpeedController(){ }
 

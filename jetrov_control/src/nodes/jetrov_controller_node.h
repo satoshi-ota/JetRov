@@ -5,6 +5,7 @@
 #include <geometry_msgs/Twist.h>
 
 #include "jetrov_control/speed_controller.h"
+#include "jetrov_control/steer_controller.h"
 
 namespace jetrov_control
 {
@@ -33,12 +34,12 @@ private:
     int servo_input_min_;
 
     //topic
-    geometry_msgs::Twist twist_msg_;
+    geometry_msgs::Vector3 linear_, angular_;
 
     //class
     SpeedController speed_controller_;
     SteerController steer_controller_;
-    PCA9685 *pca9685 = new PCA9685();
+    //PCA9685 *pca9685 = new PCA9685();
 
     //subscriber
     ros::Subscriber twist_sub_;
