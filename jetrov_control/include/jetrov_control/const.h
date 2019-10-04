@@ -35,8 +35,8 @@ static constexpr int ESC_OUTPUT_MAX = 255;
 static constexpr int ESC_OUTPUT_MIN = -255;
 
 //STEER Servo micro sec
-static constexpr int STEER_SERVO_PULSE_WIDTH_MAX = 2500;
-static constexpr int STEER_SERVO_PULSE_WIDTH_MIN = 500;
+static constexpr int STEER_SERVO_PULSE_WIDTH_MAX = 2100;
+static constexpr int STEER_SERVO_PULSE_WIDTH_MIN = 900;
 
 //output range
 static constexpr double STEER_SERVO_OUTPUT_MAX = 1;
