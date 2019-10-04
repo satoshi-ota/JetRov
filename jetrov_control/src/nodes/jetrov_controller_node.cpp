@@ -19,7 +19,7 @@ JetrovControllerNode::JetrovControllerNode(
     pulse_sub_ = nh_.subscribe("enc_pulse", 1, &JetrovControllerNode::CurrentPulseCB, this);
 
     InitializePWM();
-    InitializePCA9885();
+    InitializePCA9685();
 }
 
 JetrovControllerNode::~JetrovControllerNode(){ }
@@ -32,7 +32,7 @@ void JetrovControllerNode::InitializePWM()
     servo_input_min_ = PWM_RESOLUTON * CONTROL_FREQUENCY * STEER_SERVO_PULSE_WIDTH_MIN * 10e-6;
 }
 
-void JetrovControllerNode::InitializePCA9885()
+void JetrovControllerNode::InitializePCA9685()
 {
     int err = pca9685->openPCA9685();
     if (err < 0)

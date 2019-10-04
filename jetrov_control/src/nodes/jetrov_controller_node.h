@@ -19,7 +19,7 @@ public:
     ~JetrovControllerNode();
 
     void InitializePWM();
-    void InitializePCA9885();
+    void InitializePCA9685();
     void ControllerReconfigureCB(jetrov_control::JetrovControllerConfig &config, uint32_t level);
 
     void ControlESC();
