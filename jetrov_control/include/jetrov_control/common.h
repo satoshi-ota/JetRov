@@ -11,7 +11,7 @@
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
 
-//#include "jetrov_control/JHPWMPCA9685.h"
+#include "jetrov_control/JHPWMPCA9685.h"
 #include "jetrov_control/const.h"
 
 namespace jetrov_control{

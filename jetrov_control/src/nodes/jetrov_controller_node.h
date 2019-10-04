@@ -44,7 +44,7 @@ private:
     //class
     SpeedController speed_controller_;
     SteerController steer_controller_;
-    //PCA9685 *pca9685 = new PCA9685();
+    PCA9685 *pca9685 = new PCA9685();
 
     //subscriber
     ros::Subscriber twist_sub_;

@@ -32,7 +32,7 @@ include_directories(
 include_directories(include ${catkin_INCLUDE_DIRS})
 
 add_library(jetrov_control
-    #src/library/JHPWMPCA9685.cpp
+    src/library/JHPWMPCA9685.cpp
     src/library/steer_controller.cpp
     src/library/speed_controller.cpp)
 
