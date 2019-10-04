@@ -53,7 +53,7 @@ int main(int argc, char** argv)
         printf("PCA9685 Device Address: 0x%02X\n",pca9685->kI2CAddress);
         pca9685->setAllPWM(0,0);
         pca9685->reset();
-        pca9685->setPWMFrequency(60);
+        pca9685->setPWMFrequency(50);
         pca9685->setPWM(0,0,307);
         sleep(3);
         // 27 is the ESC key
