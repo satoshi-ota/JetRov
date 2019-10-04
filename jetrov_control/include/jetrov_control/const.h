@@ -4,7 +4,7 @@
 namespace jetrov_control{
 
 //steer rad
-static constexpr double MAX_STEER_ANGLE = 0.05;
+static constexpr double MAX_STEER_ANGLE = 0.52;
 
 //wheel base m
 static constexpr double WHEEL_BASE = 0.48;

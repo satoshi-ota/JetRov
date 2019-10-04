@@ -10,7 +10,7 @@ JetrovControllerNode::JetrovControllerNode(
 {
     //set up dynamic reconfigure
     srv_ = boost::make_shared
-            <dynamic_reconfigure::Server<jetrov_control::JetrovControllerConfigConfig>>(private_nh);
+            <dynamic_reconfigure::Server<jetrov_control::JetrovControllerConfig>>(private_nh);
     dynamic_reconfigure::Server<jetrov_control::JetrovControllerConfig>::CallbackType cb
         = boost::bind(&JetrovControllerNode::ControllerReconfigureCB, this, _1, _2);
     srv_->setCallback(cb);
@@ -67,8 +67,7 @@ void JetrovControllerNode::ControlESC()
 
     double output_pwm = map(output, ESC_OUTPUT_MIN, ESC_OUTPUT_MAX, esc_input_min_, esc_input_max_);
     //pca9685->setPWM(1, 0, output_pwm);
-    std::cout << tgt_pulse << std::endl;
-    std::cout << output << std::endl;
+    //std::cout << output << std::endl;
 }
 
 void JetrovControllerNode::ControlSteerServo()
@@ -82,8 +81,10 @@ void JetrovControllerNode::ControlSteerServo()
 
     double steer_angle = steer_controller_.GetSteerAngle();
     double output = steer_angle / MAX_STEER_ANGLE;
+    std::cout << output << std::endl;
     output = std::min(STEER_SERVO_OUTPUT_MAX, output);
     output = std::max(STEER_SERVO_OUTPUT_MIN, output);
+
 
     double output_pwm = map(output, STEER_SERVO_OUTPUT_MIN, STEER_SERVO_OUTPUT_MAX, servo_input_min_, servo_input_max_);
     //pca9685->setPWM(0, 0, output_pwm);

@@ -20,7 +20,7 @@ public:
 
     void InitializePWM();
     void InitializePCA9885();
-    void ControllerReconfigureCB(pyramid_central::JetrovControllerConfig &config, uint32_t level);
+    void ControllerReconfigureCB(jetrov_control::JetrovControllerConfig &config, uint32_t level);
 
     void ControlESC();
     void ControlSteerServo();
@@ -35,6 +35,8 @@ private:
     int esc_input_min_;
     int servo_input_max_;
     int servo_input_min_;
+
+    boost::shared_ptr<dynamic_reconfigure::Server<jetrov_control::JetrovControllerConfig>> srv_;
 
     //topic
     geometry_msgs::Vector3 linear_, angular_;
