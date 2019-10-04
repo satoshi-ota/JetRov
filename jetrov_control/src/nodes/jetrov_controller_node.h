@@ -3,8 +3,11 @@
 
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
+#include <dynamic_reconfigure/server.h>
 
 #include "jetrov_control/speed_controller.h"
+#include "jetrov_control/steer_controller.h"
+#include "jetrov_control/JetrovControllerConfig.h"
 
 namespace jetrov_control
 {
@@ -17,6 +20,7 @@ public:
 
     void InitializePWM();
     void InitializePCA9885();
+    void ControllerReconfigureCB(jetrov_control::JetrovControllerConfig &config, uint32_t level);
 
     void ControlESC();
     void ControlSteerServo();
@@ -32,13 +36,15 @@ private:
     int servo_input_max_;
     int servo_input_min_;
 
+    boost::shared_ptr<dynamic_reconfigure::Server<jetrov_control::JetrovControllerConfig>> srv_;
+
     //topic
-    geometry_msgs::Twist twist_msg_;
+    geometry_msgs::Vector3 linear_, angular_;
 
     //class
     SpeedController speed_controller_;
     SteerController steer_controller_;
-    PCA9685 *pca9685 = new PCA9685();
+    //PCA9685 *pca9685 = new PCA9685();
 
     //subscriber
     ros::Subscriber twist_sub_;

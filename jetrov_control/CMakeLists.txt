@@ -10,6 +10,11 @@ find_package(catkin REQUIRED COMPONENTS
   sensor_msgs
   std_msgs
   tf
+  dynamic_reconfigure
+)
+
+generate_dynamic_reconfigure_options(
+  cfg/JetrovController.cfg
 )
 
 catkin_package(
@@ -27,12 +32,13 @@ include_directories(
 include_directories(include ${catkin_INCLUDE_DIRS})
 
 add_library(jetrov_control
-    src/library/JHPWMPCA9685.cpp
+    #src/library/JHPWMPCA9685.cpp
+    src/library/steer_controller.cpp
     src/library/speed_controller.cpp)
 
 target_link_libraries(jetrov_control ${catkin_LIBRARIES})
 add_dependencies(jetrov_control ${catkin_EXPORTED_TARGETS})
 
 add_executable(jetrov_controller_node src/nodes/jetrov_controller_node.cpp)
-add_dependencies(jetrov_controller_node ${catkin_EXPORTED_TARGETS})
+add_dependencies(jetrov_controller_node jetrov_control_gencfg ${catkin_EXPORTED_TARGETS})
 target_link_libraries(jetrov_controller_node jetrov_control ${catkin_LIBRARIES})
