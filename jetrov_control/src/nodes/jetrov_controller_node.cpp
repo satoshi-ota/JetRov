@@ -65,7 +65,7 @@ void JetrovControllerNode::ControlESC()
     speed_controller_.ComputeESCOutput();
     int output = speed_controller_.getOutput();
 
-    double output_pwm = map(output, ESC_OUTPUT_MIN, ESC_OUTPUT_MAX, esc_input_min_, esc_input_max_);
+    int output_pwm = map(output, ESC_OUTPUT_MIN, ESC_OUTPUT_MAX, esc_input_min_, esc_input_max_);
     pca9685->setPWM(1, 0, output_pwm);
     //std::cout << output << std::endl;
 }
@@ -86,7 +86,7 @@ void JetrovControllerNode::ControlSteerServo()
     output = std::max(STEER_SERVO_OUTPUT_MIN, output);
 
 
-    double output_pwm = map(output, STEER_SERVO_OUTPUT_MIN, STEER_SERVO_OUTPUT_MAX, servo_input_min_, servo_input_max_);
+    int output_pwm = map(output, STEER_SERVO_OUTPUT_MIN, STEER_SERVO_OUTPUT_MAX, servo_input_min_, servo_input_max_);
     std::cout << output_pwm << std::endl;
     pca9685->setPWM(0, 0, output_pwm);
 }
