@@ -88,7 +88,7 @@ void JetrovControllerNode::ControlSteerServo()
 
     double output_pwm = map(output, STEER_SERVO_OUTPUT_MIN, STEER_SERVO_OUTPUT_MAX, servo_input_min_, servo_input_max_);
     std::cout << output_pwm << std::endl;
-    pca9685->setPWM(0, 0, 400);
+    pca9685->setPWM(0, 0, output_pwm);
 }
 
 void JetrovControllerNode::DesireTwistCB(const geometry_msgs::TwistPtr& twist_msg)
