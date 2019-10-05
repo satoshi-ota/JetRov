@@ -26,10 +26,10 @@ JetrovControllerNode::~JetrovControllerNode(){ }
 
 void JetrovControllerNode::InitializePWM()
 {
-    esc_input_max_ = PWM_RESOLUTON * CONTROL_FREQUENCY * ESC_PULSE_WIDTH_MAX * 10e-6;
-    esc_input_min_ = PWM_RESOLUTON * CONTROL_FREQUENCY * ESC_PULSE_WIDTH_MIN * 10e-6;
-    servo_input_max_ = PWM_RESOLUTON * CONTROL_FREQUENCY * STEER_SERVO_PULSE_WIDTH_MAX * 10e-6;
-    servo_input_min_ = PWM_RESOLUTON * CONTROL_FREQUENCY * STEER_SERVO_PULSE_WIDTH_MIN * 10e-6;
+    esc_input_max_ = PWM_RESOLUTON * CONTROL_FREQUENCY * ESC_PULSE_WIDTH_MAX * 1e-6;
+    esc_input_min_ = PWM_RESOLUTON * CONTROL_FREQUENCY * ESC_PULSE_WIDTH_MIN * 1e-6;
+    servo_input_max_ = PWM_RESOLUTON * CONTROL_FREQUENCY * STEER_SERVO_PULSE_WIDTH_MAX * 1e-6;
+    servo_input_min_ = PWM_RESOLUTON * CONTROL_FREQUENCY * STEER_SERVO_PULSE_WIDTH_MIN * 1e-6;
 }
 
 void JetrovControllerNode::InitializePCA9685()
