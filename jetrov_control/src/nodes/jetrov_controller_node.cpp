@@ -81,12 +81,13 @@ void JetrovControllerNode::ControlSteerServo()
 
     double steer_angle = steer_controller_.GetSteerAngle();
     double output = steer_angle / MAX_STEER_ANGLE;
-    std::cout << output << std::endl;
+
     output = std::min(STEER_SERVO_OUTPUT_MAX, output);
     output = std::max(STEER_SERVO_OUTPUT_MIN, output);
 
 
     double output_pwm = map(output, STEER_SERVO_OUTPUT_MIN, STEER_SERVO_OUTPUT_MAX, servo_input_min_, servo_input_max_);
+    std::cout << output_pwm << std::endl;
     pca9685->setPWM(0, 0, output_pwm);
 }
 
