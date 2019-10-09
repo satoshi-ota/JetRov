@@ -14,10 +14,7 @@ find_package(catkin REQUIRED COMPONENTS
 
  add_message_files(
    FILES
-   MarinCtrl.msg
-   MarinFeedback.msg
-   MarinMoveDirection.msg
-   MarinStatus.msg
+   PulseCount.msg
  )
 
  generate_messages(
@@ -33,6 +30,6 @@ catkin_package(
 )
 
 include_directories(
-# include
+  include
   ${catkin_INCLUDE_DIRS}
 )
