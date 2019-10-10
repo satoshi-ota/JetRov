@@ -53,10 +53,10 @@ void enc_changedPinB()
 ros::NodeHandle nh;
 
 sensor_msgs::Imu imu;
-ros::Publisher pub_imu("imu/data_raw", &imu);
+ros::Publisher pub_imu("/imu/data_raw", &imu);
 
 jetrov_msgs::PulseCount cnt;
-ros::Publisher pub_cnt("/pulse_count", &cnt);
+ros::Publisher pub_cnt("/status/pulse_count", &cnt);
 
 
 
