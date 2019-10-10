@@ -1,8 +1,9 @@
-#ifdef JETROV_CONTROL_DEAD_RECKONING_H
+#ifndef JETROV_CONTROL_DEAD_RECKONING_H
 #define JETROV_CONTROL_DEAD_RECKONING_H
 
 #include <ros/ros.h>
 #include <nav_msgs/Odometry.h>
+#include <tf/transform_broadcaster.h>
 
 #include "jetrov_control/const.h"
 
@@ -21,7 +22,7 @@ public:
 
     inline void SetCurrentPulse(const int& current_pulse){current_pulse_ = current_pulse;};
     inline void SetOmega(const double& omega){omega_ = omega;};
-    
+
     inline nav_msgs::Odometry GetOdometry(){return odom_msg_;};
 
 private:

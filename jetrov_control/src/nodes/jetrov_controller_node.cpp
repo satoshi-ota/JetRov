@@ -15,8 +15,10 @@ JetrovControllerNode::JetrovControllerNode(
         = boost::bind(&JetrovControllerNode::ControllerReconfigureCB, this, _1, _2);
     srv_->setCallback(cb);
 
-    twist_sub_ = nh_.subscribe("cmd_vel", 1, &JetrovControllerNode::DesireTwistCB, this);
-    pulse_sub_ = nh_.subscribe("enc_pulse", 1, &JetrovControllerNode::CurrentPulseCB, this);
+    twist_sub_ = nh_.subscribe(jetrov_msgs::default_topics::COMMAND_VELOCITY, 1,
+                               &JetrovControllerNode::DesireTwistCB, this);
+    pulse_sub_ = nh_.subscribe(jetrov_msgs::default_topics::STATUS_PULSE_COUNT, 1,
+                               &JetrovControllerNode::CurrentPulseCB, this);
 
     InitializePWM();
     InitializePCA9685();
@@ -97,9 +99,9 @@ void JetrovControllerNode::DesireTwistCB(const geometry_msgs::TwistPtr& twist_ms
     angular_ = twist_msg->angular;
 }
 
-void JetrovControllerNode::CurrentPulseCB(const std_msgs::Int32Ptr& pulse_msg)
+void JetrovControllerNode::CurrentPulseCB(const jetrov_msgs::PulseCountPtr& pulse_msg)
 {
-    speed_controller_.SetCurrentPulse(pulse_msg->data);
+    speed_controller_.SetCurrentPulse(pulse_msg->pulse_count);
 
     ControlESC();
     ControlSteerServo();

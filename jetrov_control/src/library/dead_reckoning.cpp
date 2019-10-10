@@ -26,14 +26,14 @@ void DeadReckoning::computeVelocity()
 
 void DeadReckoning::ComputeOdometry()
 {
-    current_time = ros::Time::now();
-    dt = (current_time - last_time).toSec();
+    current_time_ = ros::Time::now();
+    dt_ = (current_time_ - last_time_).toSec();
 
     double delta_theta;
     double delta_x;
     double delta_y;
 
-    if(omega == 0)
+    if(omega_ == 0)
     {
       delta_theta = 0;
       delta_x = vx_ * dt_;
@@ -51,7 +51,7 @@ void DeadReckoning::ComputeOdometry()
     y_ += delta_y;
     theta_ += delta_theta;
 
-    last_time = current_time;
+    last_time_ = current_time_;
 }
 
 void DeadReckoning::SetMsg()

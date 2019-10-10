@@ -1,5 +1,6 @@
 #include "dead_reckoning_node.h"
 
+using namespace message_filters;
 namespace jetrov_control
 {
 
@@ -8,24 +9,34 @@ DeadReckoningNode::DeadReckoningNode(
     :nh_(nh),
      private_nh_(private_nh)
 {
-    imu_sub_ = nh_.subscribe("filterd_imu", 1, &DeadReckoningNode::ImuCB, this);
-    pulse_sub_ = nh_.subscribe("enc_pulse", 1, &DeadReckoningNode::CurrentPulseCB, this);
+    //messsage filter
+    imu_sub_.subscribe(nh_, jetrov_msgs::default_topics::STATUS_IMU, 1);
+    pulse_sub_.subscribe(nh_, jetrov_msgs::default_topics::STATUS_PULSE_COUNT, 1);
 
-    odom_pub_ = private_nh.advertise<nav_msgs::Odometry> ("/odom", 0);
+    sync_.reset(new Sync(MySyncPolicy(10), imu_sub_, pulse_sub_));
+    sync_->registerCallback(boost::bind(&DeadReckoningNode::StatusCB, this, _1, _2));
+
+    odom_pub_ = nh_.advertise<nav_msgs::Odometry>
+                                    (jetrov_msgs::default_topics::STATUS_ODOMETRY, 0);
 }
 
 DeadReckoningNode::~DeadReckoningNode(){ }
 
-DeadReckoningNode::ImuCB(const sensor_msgs::ImuPtr& imu_msg)
+void DeadReckoningNode::StatusCB(const sensor_msgs::ImuConstPtr &imu_msg,
+                                 const jetrov_msgs::PulseCountConstPtr &pulse_msg)
 {
     double omega = imu_msg->angular_velocity.z;
     dead_reckoning_.SetOmega(omega);
 
-}
+    int current_pulse = pulse_msg->pulse_count;
+    dead_reckoning_.SetCurrentPulse(current_pulse);
 
-DeadReckoningNode::CurrentPulseCB(const std_msgs::Int32Ptr& pulse_msg)
-{
-    
+    dead_reckoning_.ComputeOdometry();
+
+    nav_msgs::Odometry odometry_msg;
+    odometry_msg = dead_reckoning_.GetOdometry();
+
+    odom_pub_.publish(odometry_msg);
 }
 
 } //namespace jetrov_control
