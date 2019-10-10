@@ -39,7 +39,7 @@ add_library(jetrov_control
 
 target_link_libraries(jetrov_control
     ${catkin_LIBRARIES}
-    /usr/lib/x86_64-linux-gnu/libi2c.so)
+    /usr/lib/aarch64-linux-gnu/libi2c.so)
 
 add_dependencies(jetrov_control ${catkin_EXPORTED_TARGETS})
 
