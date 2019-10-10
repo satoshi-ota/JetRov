@@ -5,7 +5,6 @@ find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
   nav_msgs
   roscpp
-  rospy
   sensor_msgs
   std_msgs
   tf
@@ -14,25 +13,22 @@ find_package(catkin REQUIRED COMPONENTS
 
  add_message_files(
    FILES
-   MarinCtrl.msg
-   MarinFeedback.msg
-   MarinMoveDirection.msg
-   MarinStatus.msg
+   PulseCount.msg
  )
 
  generate_messages(
    DEPENDENCIES
-   geometry_msgs   nav_msgs   sensor_msgs   std_msgs
+   geometry_msgs nav_msgs sensor_msgs std_msgs
  )
 
 catkin_package(
-  #INCLUDE_DIRS include
+  INCLUDE_DIRS include
   LIBRARIES
-  CATKIN_DEPENDS geometry_msgs nav_msgs roscpp rospy sensor_msgs std_msgs tf
-  DEPENDS system_lib
+  CATKIN_DEPENDS geometry_msgs nav_msgs roscpp sensor_msgs std_msgs tf
+  DEPENDS
 )
 
 include_directories(
-# include
+  include
   ${catkin_INCLUDE_DIRS}
 )

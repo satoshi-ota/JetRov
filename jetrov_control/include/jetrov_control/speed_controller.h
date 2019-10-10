@@ -2,7 +2,6 @@
 #define JETROV_CONTROL_SPEED_CONTROLLER_H
 
 #include <ros/ros.h>
-#include <std_msgs/Int32.h>
 #include <dynamic_reconfigure/server.h>
 
 #include "jetrov_control/const.h"

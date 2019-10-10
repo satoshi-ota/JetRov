@@ -4,7 +4,6 @@
 #include <math.h>
 
 #include <ros/ros.h>
-#include <geometry_msgs/Twist.h>
 
 #include "jetrov_control/const.h"
 

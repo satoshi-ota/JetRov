@@ -5,6 +5,7 @@
 #include <geometry_msgs/Twist.h>
 #include <dynamic_reconfigure/server.h>
 
+#include "jetrov_msgs/PulseCount.h"
 #include "jetrov_control/speed_controller.h"
 #include "jetrov_control/steer_controller.h"
 #include "jetrov_control/JetrovControllerConfig.h"
@@ -52,7 +53,7 @@ private:
 
 private:
     void DesireTwistCB(const geometry_msgs::TwistPtr& twist_msg);
-    void CurrentPulseCB(const std_msgs::Int32Ptr& pulse_msg);
+    void CurrentPulseCB(const jetrov_msgs::PulseCountPtr& pulse_msg);
 };
 
 } //namespace jetrov_control
