@@ -37,6 +37,9 @@ private:
     int servo_input_max_;
     int servo_input_min_;
 
+    //joy
+    bool use_joy_;
+
     boost::shared_ptr<dynamic_reconfigure::Server<jetrov_control::JetrovControllerConfig>> srv_;
 
     //topic

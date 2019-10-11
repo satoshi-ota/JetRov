@@ -6,6 +6,7 @@ namespace default_topics{
 
 //command
 static constexpr char COMMAND_VELOCITY[] = "/command/velocity";
+static constexpr char COMMAND_JOY[] = "/command/joy";
 
 // status
 static constexpr char STATUS_PULSE_COUNT[] = "/status/pulse_count";

@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>jetrov_joy</name>
+  <name>jetrov_joy_interface</name>
   <version>0.0.0</version>
-  <description>The jetrov_joy package</description>
+  <description>The jetrov_joy_interface package</description>
   <maintainer email="satoshi.ota928@gmail.com">Ota Satoshi</maintainer>
   <author>Ota Satoshi</author>
   <license>MIT License</license>
