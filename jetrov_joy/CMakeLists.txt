@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(jetov_joy)
+project(jetrov_joy)
 
 find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
@@ -8,7 +8,6 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   sensor_msgs
   tf
-  marin_msgs
 )
 
 catkin_package(
@@ -24,6 +23,6 @@ include_directories(
 )
 
 
-include_directories(include ${catkin_INCLUDE_DIRS})
-add_executable(joystick_controller src/joystick_controller.cpp)
-target_link_libraries(joystick_controller ${catkin_LIBRARIES})
+#include_directories(include ${catkin_INCLUDE_DIRS})
+#add_executable(joystick_controller src/joystick_controller.cpp)
+#target_link_libraries(joystick_controller ${catkin_LIBRARIES})
