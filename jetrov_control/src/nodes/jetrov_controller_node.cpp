@@ -18,8 +18,8 @@ JetrovControllerNode::JetrovControllerNode(
         = boost::bind(&JetrovControllerNode::ControllerReconfigureCB, this, _1, _2);
     srv_->setCallback(cb);
 
-    //twist_sub_ = nh_.subscribe(jetrov_msgs::default_topics::COMMAND_VELOCITY, 1,
-    //                           &JetrovControllerNode::DesireTwistCB, this);
+    twist_sub_ = nh_.subscribe(jetrov_msgs::default_topics::COMMAND_VELOCITY, 1,
+                               &JetrovControllerNode::DesireTwistCB, this);
     joy_sub_ = nh_.subscribe(jetrov_msgs::default_topics::COMMAND_JOY, 1,
                              &JetrovControllerNode::JoyCommandCB, this);
     pulse_sub_ = nh_.subscribe(jetrov_msgs::default_topics::STATUS_PULSE_COUNT, 1,
