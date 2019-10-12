@@ -60,7 +60,7 @@ private:
 
 private:
     void DesireTwistCB(const geometry_msgs::TwistPtr& twist_msg);
-    void JoyCommandCB(const jetrov_msgs::Command& cmd_msg);
+    void JoyCommandCB(const jetrov_msgs::CommandPtr& cmd_msg);
     void CurrentPulseCB(const jetrov_msgs::PulseCountPtr& pulse_msg);
 };
 

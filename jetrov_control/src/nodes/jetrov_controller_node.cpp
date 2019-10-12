@@ -106,7 +106,7 @@ void JetrovControllerNode::DesireTwistCB(const geometry_msgs::TwistPtr& twist_ms
     angular_ = twist_msg->angular;
 }
 
-void JetrovControllerNode::JoyCommandCB(const jetrov_msgs::Command& cmd_msg)
+void JetrovControllerNode::JoyCommandCB(const jetrov_msgs::CommandPtr& cmd_msg)
 {
     linear_ = cmd_msg->linear;
     steer_angle_ = cmd_msg->steer_angle;
