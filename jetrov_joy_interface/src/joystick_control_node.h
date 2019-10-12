@@ -5,6 +5,7 @@
 #include <geometry_msgs/Twist.h>
 #include <sensor_msgs/Joy.h>
 #include <jetrov_msgs/default_topics.h>
+#include <jetrov_msgs/Command.h>
 #include <jetrov_control/const.h>
 
 namespace joy_interface
@@ -14,7 +15,7 @@ struct Axes {
     int linear_x;
     int steer_angle;
     int linear_x_direction;
-    int steer_angle_deirection;
+    int steer_angle_direction;
 };
 
 struct Buttons {
@@ -31,7 +32,7 @@ struct Max {
 class JoyStickControlNode
 {
 public:
-    JoyStickControlNode();
+    JoyStickControlNode(const ros::NodeHandle& nh, const ros::NodeHandle& private_nh);
     ~JoyStickControlNode();
 
     void EmergencyStop();
@@ -52,7 +53,7 @@ private:
     ros::Publisher vel_pub_;
 
 private:
-    void JoyCB();
+    void JoyCB(const sensor_msgs::JoyConstPtr& joy_msg);
 };
 
 } //namespace joy_interface

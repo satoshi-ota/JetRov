@@ -3,7 +3,8 @@
 namespace joy_interface
 {
 
-JoyStickControlNode(const ros::NodeHandle& nh, const ros::NodeHandle& private_nh)
+JoyStickControlNode::JoyStickControlNode(
+    const ros::NodeHandle& nh, const ros::NodeHandle& private_nh)
     :nh_(nh),
      private_nh_(private_nh)
 {
@@ -25,10 +26,12 @@ JoyStickControlNode(const ros::NodeHandle& nh, const ros::NodeHandle& private_nh
     private_nh_.param("button_emergency_stop_", buttons_.emergency_stop, 0);
     private_nh_.param("control_mode_", buttons_.ctrl_mode, 1);
 
-    joy_sub_ = private_nh.subscribe("/joy", 1, &JoyStickControlNode::JoyCb, this);
-    vel_pub_ = private_nh.advertise<geometry_msgs::Twist>
+    joy_sub_ = nh_.subscribe("/joy", 1, &JoyStickControlNode::JoyCB, this);
+    vel_pub_ = nh_.advertise<geometry_msgs::Twist>
                                    (jetrov_msgs::default_topics::COMMAND_JOY, 0);
 }
+
+JoyStickControlNode::~JoyStickControlNode(){ }
 
 void JoyStickControlNode::EmergencyStop()
 {
@@ -39,12 +42,12 @@ void JoyStickControlNode::EmergencyStop()
     cmd_msg_.emergency_stop = true;
 }
 
-void JoyStickControlNode::JoyCB(const sensor_msgs::Joy& joy_msg)
+void JoyStickControlNode::JoyCB(const sensor_msgs::JoyConstPtr& joy_msg)
 {
     current_joy_ = *joy_msg;
 
 
-    if(joy_msg->buttons[buttons.emergency_stop])
+    if(joy_msg->buttons[buttons_.emergency_stop])
     {
         EmergencyStop();
     }
