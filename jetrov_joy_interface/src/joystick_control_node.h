@@ -20,6 +20,7 @@ struct Axes {
 
 struct Buttons {
     int emergency_stop;
+    int emergency_stop_clear;
     int ctrl_enable;
     int ctrl_mode;
 };
@@ -36,6 +37,7 @@ public:
     ~JoyStickControlNode();
 
     void EmergencyStop();
+    void EmergencyStopClear();
 
 private:
     ros::NodeHandle nh_;

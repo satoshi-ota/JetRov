@@ -14,16 +14,17 @@ JoyStickControlNode::JoyStickControlNode(
     cmd_msg_.steer_angle = 0;
     cmd_msg_.emergency_stop = false;
 
-    private_nh_.param("axis_linear_x_", axes_.linear_x, 0);
-    private_nh_.param("axis_steer_angle_", axes_.steer_angle, 1);
+    private_nh_.param("axis_linear_x_", axes_.linear_x, 3);
+    private_nh_.param("axis_steer_angle_", axes_.steer_angle, 0);
 
-    private_nh_.param("axis_direction_linear_x", axes_.linear_x_direction, -1);
+    private_nh_.param("axis_direction_linear_x", axes_.linear_x_direction, 1);
     private_nh_.param("axis_direction_pitch", axes_.steer_angle_direction, 1);
 
     private_nh_.param("max_linear_x_", max_.linear_x, jetrov_control::MAX_SPEED);
     private_nh_.param("max_steer_angle_", max_.steer_angle, jetrov_control::MAX_STEER_ANGLE);
 
-    private_nh_.param("button_emergency_stop_", buttons_.emergency_stop, 0);
+    private_nh_.param("button_emergency_stop_", buttons_.emergency_stop, 2);
+    private_nh_.param("button_emergency_stop_clear_", buttons_.emergency_stop_clear, 0);
     private_nh_.param("control_mode_", buttons_.ctrl_mode, 1);
 
     joy_sub_ = nh_.subscribe("/joy", 1, &JoyStickControlNode::JoyCB, this);
@@ -42,6 +43,15 @@ void JoyStickControlNode::EmergencyStop()
     cmd_msg_.emergency_stop = true;
 }
 
+void JoyStickControlNode::EmergencyStopClear()
+{
+    cmd_msg_.linear.x = 0;
+    cmd_msg_.linear.y = 0;
+    cmd_msg_.linear.z = 0;
+    cmd_msg_.steer_angle = 0;
+    cmd_msg_.emergency_stop = false;
+}
+
 void JoyStickControlNode::JoyCB(const sensor_msgs::JoyConstPtr& joy_msg)
 {
     current_joy_ = *joy_msg;
@@ -50,6 +60,10 @@ void JoyStickControlNode::JoyCB(const sensor_msgs::JoyConstPtr& joy_msg)
     if(joy_msg->buttons[buttons_.emergency_stop])
     {
         EmergencyStop();
+    }
+    else if(joy_msg->buttons[buttons_.emergency_stop_clear])
+    {
+        EmergencyStopClear();
     }
     else
     {
