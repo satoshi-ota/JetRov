@@ -4,7 +4,7 @@
     <arg name="publish_tf" default="true"/>
 
     <node pkg="joy" type="joy_node" name="joy_node"/>
-    <node pkg="jetrov_joy_interface" type="jetrov_joy_interface" name="joystick_control_node"/>
+    <node pkg="jetrov_joy_interface" type="joystick_control_node" name="joystick_control_node"/>
     <node pkg="jetrov_control" type="jetrov_controller_node" name="jetrov_joy_interface"/>
     <node pkg="jetrov_control" type="dead_reckoning_node" name="dead_reckoning_node"/>
     <node pkg="imu_filter_madgwick" type="imu_filter_node" name="imu_filter_node">
