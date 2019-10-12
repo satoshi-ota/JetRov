@@ -6,8 +6,11 @@ namespace jetrov_control
 JetrovControllerNode::JetrovControllerNode(
     const ros::NodeHandle& nh, const ros::NodeHandle& private_nh)
     :nh_(nh),
-     private_nh_(private_nh)
+     private_nh_(private_nh),
+     steer_angle_(0.0)
 {
+    private_nh_.param("use_joy_", use_joy_, true);
+
     //set up dynamic reconfigure
     srv_ = boost::make_shared
             <dynamic_reconfigure::Server<jetrov_control::JetrovControllerConfig>>(private_nh);
@@ -17,6 +20,8 @@ JetrovControllerNode::JetrovControllerNode(
 
     twist_sub_ = nh_.subscribe(jetrov_msgs::default_topics::COMMAND_VELOCITY, 1,
                                &JetrovControllerNode::DesireTwistCB, this);
+    joy_sub_ = nh_.subscribe(jetrov_msgs::default_topics::COMMAND_JOY, 1,
+                             &JetrovControllerNode::JoyCommandCB, this);
     pulse_sub_ = nh_.subscribe(jetrov_msgs::default_topics::STATUS_PULSE_COUNT, 1,
                                &JetrovControllerNode::CurrentPulseCB, this);
 
@@ -69,27 +74,29 @@ void JetrovControllerNode::ControlESC()
 
     int output_pwm = map(output, ESC_OUTPUT_MIN, ESC_OUTPUT_MAX, esc_input_min_, esc_input_max_);
     pca9685->setPWM(1, 0, output_pwm);
-    //std::cout << output << std::endl;
 }
 
 void JetrovControllerNode::ControlSteerServo()
 {
-    double vel = linear_.x;
-    double omega = angular_.z;
-    steer_controller_.SetLinearVel(vel);
-    steer_controller_.SetAngularVel(omega);
+    if(use_joy_ != true)
+    {
+        double vel = linear_.x;
+        double omega = angular_.z;
 
-    steer_controller_.Vel2SteerAngle();
+        steer_controller_.SetLinearVel(vel);
+        steer_controller_.SetAngularVel(omega);
+        steer_controller_.Vel2SteerAngle();
 
-    double steer_angle = steer_controller_.GetSteerAngle();
-    double output = steer_angle / MAX_STEER_ANGLE;
+        steer_angle_ = steer_controller_.GetSteerAngle();
+    }
+
+    double output = steer_angle_ / MAX_STEER_ANGLE;
 
     output = std::min(STEER_SERVO_OUTPUT_MAX, output);
     output = std::max(STEER_SERVO_OUTPUT_MIN, output);
 
-
-    int output_pwm = map(output, STEER_SERVO_OUTPUT_MIN, STEER_SERVO_OUTPUT_MAX, servo_input_min_, servo_input_max_);
-    std::cout << output_pwm << std::endl;
+    int output_pwm = map(output, STEER_SERVO_OUTPUT_MIN,
+                                 STEER_SERVO_OUTPUT_MAX, servo_input_min_, servo_input_max_);
     pca9685->setPWM(0, 0, output_pwm);
 }
 
@@ -97,6 +104,13 @@ void JetrovControllerNode::DesireTwistCB(const geometry_msgs::TwistPtr& twist_ms
 {
     linear_ = twist_msg->linear;
     angular_ = twist_msg->angular;
+}
+
+void JetrovControllerNode::JoyCommandCB(const jetrov_msgs::Command& cmd_msg)
+{
+    linear_ = cmd_msg->linear;
+    steer_angle_ = cmd_msg->steer_angle;
+    emergency_stop_ = cmd_msg->emergency_stop;
 }
 
 void JetrovControllerNode::CurrentPulseCB(const jetrov_msgs::PulseCountPtr& pulse_msg)

@@ -40,6 +40,11 @@ private:
     ros::NodeHandle nh_;
     ros::NodeHandle private_nh_;
 
+    Axes axes_;
+    Buttons buttons_;
+    Max max_;
+
+    sensor_msgs::Joy current_joy_;
     jetrov_msgs::Command cmd_msg_;
 
     ros::Subscriber joy_sub_;

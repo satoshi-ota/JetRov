@@ -22,7 +22,8 @@ JoyStickControlNode(const ros::NodeHandle& nh, const ros::NodeHandle& private_nh
     private_nh_.param("max_linear_x_", max_.linear_x, jetrov_control::MAX_SPEED);
     private_nh_.param("max_steer_angle_", max_.steer_angle, jetrov_control::MAX_STEER_ANGLE);
 
-    private_nh_.param("button_emergency_stop_", axes_.roll, 0);
+    private_nh_.param("button_emergency_stop_", buttons_.emergency_stop, 0);
+    private_nh_.param("control_mode_", buttons_.ctrl_mode, 1);
 
     joy_sub_ = private_nh.subscribe("/joy", 1, &JoyStickControlNode::JoyCb, this);
     vel_pub_ = private_nh.advertise<geometry_msgs::Twist>
