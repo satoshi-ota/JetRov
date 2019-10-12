@@ -43,6 +43,8 @@ private:
     //joy
     bool use_joy_;
 
+    bool emergency_stop_;
+
     boost::shared_ptr<dynamic_reconfigure::Server<jetrov_control::JetrovControllerConfig>> srv_;
 
     //topic
