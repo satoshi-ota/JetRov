@@ -37,9 +37,10 @@ add_library(jetrov_control
     src/library/speed_controller.cpp
     src/library/dead_reckoning.cpp)
 
+find_library(I2C_LIBRARY NAMES libi2c.so)
 target_link_libraries(jetrov_control
     ${catkin_LIBRARIES}
-    /usr/lib/x86_64-linux-gnu/libi2c.so)
+    ${I2C_LIBRARY})
 
 add_dependencies(jetrov_control ${catkin_EXPORTED_TARGETS})
 

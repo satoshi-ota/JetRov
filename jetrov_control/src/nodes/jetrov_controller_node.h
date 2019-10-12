@@ -4,8 +4,9 @@
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
 #include <dynamic_reconfigure/server.h>
+#include <jetrov_msgs/Command.h>
+#include <jetrov_msgs/PulseCount.h>
 
-#include "jetrov_msgs/PulseCount.h"
 #include "jetrov_control/speed_controller.h"
 #include "jetrov_control/steer_controller.h"
 #include "jetrov_control/JetrovControllerConfig.h"
@@ -37,6 +38,13 @@ private:
     int servo_input_max_;
     int servo_input_min_;
 
+    double steer_angle_;
+
+    //joy
+    bool use_joy_;
+
+    bool emergency_stop_;
+
     boost::shared_ptr<dynamic_reconfigure::Server<jetrov_control::JetrovControllerConfig>> srv_;
 
     //topic
@@ -49,10 +57,12 @@ private:
 
     //subscriber
     ros::Subscriber twist_sub_;
+    ros::Subscriber joy_sub_;
     ros::Subscriber pulse_sub_;
 
 private:
     void DesireTwistCB(const geometry_msgs::TwistPtr& twist_msg);
+    void JoyCommandCB(const jetrov_msgs::CommandPtr& cmd_msg);
     void CurrentPulseCB(const jetrov_msgs::PulseCountPtr& pulse_msg);
 };
 

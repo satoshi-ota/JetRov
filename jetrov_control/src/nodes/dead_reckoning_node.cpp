@@ -32,6 +32,7 @@ void DeadReckoningNode::StatusCB(const sensor_msgs::ImuConstPtr &imu_msg,
     dead_reckoning_.SetCurrentPulse(current_pulse);
 
     dead_reckoning_.ComputeOdometry();
+    dead_reckoning_.SetMsg();
 
     nav_msgs::Odometry odometry_msg;
     odometry_msg = dead_reckoning_.GetOdometry();
