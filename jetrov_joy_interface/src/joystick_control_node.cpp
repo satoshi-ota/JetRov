@@ -27,7 +27,7 @@ JoyStickControlNode::JoyStickControlNode(
     private_nh_.param("control_mode_", buttons_.ctrl_mode, 1);
 
     joy_sub_ = nh_.subscribe("/joy", 1, &JoyStickControlNode::JoyCB, this);
-    vel_pub_ = nh_.advertise<geometry_msgs::Twist>
+    vel_pub_ = nh_.advertise<jetrov_msgs::Command>
                                    (jetrov_msgs::default_topics::COMMAND_JOY, 0);
 }
 
