@@ -17,7 +17,7 @@ JoyStickControlNode::JoyStickControlNode(
     private_nh_.param("axis_linear_x_", axes_.linear_x, 3);
     private_nh_.param("axis_steer_angle_", axes_.steer_angle, 0);
 
-    private_nh_.param("axis_direction_linear_x", axes_.linear_x_direction, -1);
+    private_nh_.param("axis_direction_linear_x", axes_.linear_x_direction, 1);
     private_nh_.param("axis_direction_pitch", axes_.steer_angle_direction, 1);
 
     private_nh_.param("max_linear_x_", max_.linear_x, jetrov_control::MAX_SPEED);
