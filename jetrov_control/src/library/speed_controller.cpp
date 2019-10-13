@@ -4,8 +4,8 @@ namespace jetrov_control
 {
 
 SpeedController::SpeedController()
-    :Kp_(1),
-     Ki_(1),
+    :Kp_(0.05),
+     Ki_(0.05),
      tgt_pulse_(0),
      current_pulse_(0),
      current_error_(0),
