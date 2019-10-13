@@ -23,7 +23,9 @@ static constexpr double MAX_SPEED = 1.5;
 static constexpr int PWM_RESOLUTON = 4096;
 
 //controller frequency Hz
-static constexpr int CONTROL_FREQUENCY = 30;
+static constexpr int CONTROL_FREQUENCY = 50;
+static constexpr int FEEDBACK_FREQUENCY = 30;
+
 
 //ESC
 static constexpr int ESC_PORT = 1;

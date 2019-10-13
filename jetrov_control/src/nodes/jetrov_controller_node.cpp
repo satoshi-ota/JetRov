@@ -72,7 +72,7 @@ void JetrovControllerNode::ControlESC()
     if(emergency_stop_ != true)
     {
         int tgt_pulse
-        = linear_.x / CONTROL_FREQUENCY / ENCODER_WHEEL_DIAMETER  / M_PI * ENCODER_RESOLUTION;
+        = linear_.x / FEEDBACK_FREQUENCY / ENCODER_WHEEL_DIAMETER  / M_PI * ENCODER_RESOLUTION;
         speed_controller_.SetTargetPulse(tgt_pulse);
 
         speed_controller_.ComputeESCOutput();
