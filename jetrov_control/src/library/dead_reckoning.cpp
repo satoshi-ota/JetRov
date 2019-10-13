@@ -16,7 +16,7 @@ DeadReckoning::DeadReckoning()
 
 DeadReckoning::~DeadReckoning(){ }
 
-void DeadReckoning::computeVelocity()
+void DeadReckoning::ComputeVelocity()
 {
     vr_ = current_pulse_ * FEEDBACK_FREQUENCY * ENCODER_WHEEL_DIAMETER  * M_PI / ENCODER_RESOLUTION;
 

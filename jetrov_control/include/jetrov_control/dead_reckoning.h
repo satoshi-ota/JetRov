@@ -16,7 +16,7 @@ public:
     DeadReckoning();
     ~DeadReckoning();
 
-    void computeVelocity();
+    void ComputeVelocity();
     void ComputeOdometry();
     void SetMsg();
 

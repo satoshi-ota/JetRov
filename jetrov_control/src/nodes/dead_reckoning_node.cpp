@@ -31,6 +31,7 @@ void DeadReckoningNode::StatusCB(const sensor_msgs::ImuConstPtr &imu_msg,
     int current_pulse = pulse_msg->pulse_count;
     dead_reckoning_.SetCurrentPulse(current_pulse);
 
+    dead_reckoning_.ComputeVelocity();
     dead_reckoning_.ComputeOdometry();
     dead_reckoning_.SetMsg();
 

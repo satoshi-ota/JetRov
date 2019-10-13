@@ -13,5 +13,6 @@
         <remap from="imu/data" to="status/imu"/>
     </node>
     <node pkg="rqt_reconfigure" type="rqt_reconfigure" name="rqt_reconfigure"/>
+    <node pkg="rviz" type="rviz" name="rviz"/>
 
 </launch>
