@@ -17,7 +17,7 @@ static constexpr double ENCODER_WHEEL_DIAMETER = 0.05;
 static constexpr int ENCODER_RESOLUTION = 1440;
 
 //safty m/s
-static constexpr double MAX_SPEED = 0.5;
+static constexpr double MAX_SPEED = 1.0;
 
 //pwm resolution
 static constexpr int PWM_RESOLUTON = 4096;
@@ -37,7 +37,7 @@ static constexpr int ESC_OUTPUT_MAX = 255;
 static constexpr int ESC_OUTPUT_MIN = -255;
 
 //STEER Servo
-static constexpr int STEER_SERVO_PORT = 0; 
+static constexpr int STEER_SERVO_PORT = 0;
 //micro sec
 static constexpr int STEER_SERVO_PULSE_WIDTH_MAX = 2100;
 static constexpr int STEER_SERVO_PULSE_WIDTH_MIN = 900;
