@@ -86,9 +86,8 @@ void loop()
 {
   sendImu();
   sendEncoder();
-
   nh.spinOnce();
-  delay(100);
+  //delay(20);
 }
 
 void sendEncoder()

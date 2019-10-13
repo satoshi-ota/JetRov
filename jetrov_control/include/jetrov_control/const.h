@@ -23,7 +23,7 @@ static constexpr double MAX_SPEED = 1.5;
 static constexpr int PWM_RESOLUTON = 4096;
 
 //controller frequency Hz
-static constexpr int CONTROL_FREQUENCY = 50;
+static constexpr int CONTROL_FREQUENCY = 30;
 
 //ESC
 static constexpr int ESC_PORT = 1;
@@ -33,8 +33,8 @@ static constexpr int ESC_PULSE_WIDTH_MIN = 1000;
 static constexpr int ESC_NEUTRAL = 1500;
 
 //output range
-static constexpr int ESC_OUTPUT_MAX = 10000;
-static constexpr int ESC_OUTPUT_MIN = -10000;
+static constexpr int ESC_OUTPUT_MAX = 1000;
+static constexpr int ESC_OUTPUT_MIN = -1000;
 
 //STEER Servo
 static constexpr int STEER_SERVO_PORT = 0;
