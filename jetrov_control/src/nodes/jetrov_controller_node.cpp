@@ -121,7 +121,7 @@ void JetrovControllerNode::JoyCommandCB(const jetrov_msgs::CommandPtr& cmd_msg)
     linear_ = cmd_msg->linear;
     steer_angle_ = cmd_msg->steer_angle;
     emergency_stop_ = cmd_msg->emergency_stop;
-    if(emergency_stop_ = true)
+    if(emergency_stop_ == true)
     {
         pca9685->setPWM(STEER_SERVO_PORT, 0, servo_neutral_);
         pca9685->setPWM(ESC_PORT, 0, esc_neutral_);
