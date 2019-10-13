@@ -35,8 +35,10 @@ void JetrovControllerNode::InitializePWM()
 {
     esc_input_max_ = PWM_RESOLUTON * CONTROL_FREQUENCY * ESC_PULSE_WIDTH_MAX * 1e-6;
     esc_input_min_ = PWM_RESOLUTON * CONTROL_FREQUENCY * ESC_PULSE_WIDTH_MIN * 1e-6;
+    esc_neutral_ = PWM_RESOLUTON * CONTROL_FREQUENCY * ESC_NEUTRAL * 1e-6;
     servo_input_max_ = PWM_RESOLUTON * CONTROL_FREQUENCY * STEER_SERVO_PULSE_WIDTH_MAX * 1e-6;
     servo_input_min_ = PWM_RESOLUTON * CONTROL_FREQUENCY * STEER_SERVO_PULSE_WIDTH_MIN * 1e-6;
+    servo_neutral_ = PWM_RESOLUTON * CONTROL_FREQUENCY * STEER_SERVO_NEUTRAL * 1e-6;
 }
 
 void JetrovControllerNode::InitializePCA9685()
@@ -52,6 +54,8 @@ void JetrovControllerNode::InitializePCA9685()
         pca9685->setAllPWM(0,0);
         pca9685->reset();
         pca9685->setPWMFrequency(CONTROL_FREQUENCY);
+        pca9685->setPWM(STEER_SERVO_PORT, 0, servo_neutral_);
+        pca9685->setPWM(ESC_PORT, 0, esc_neutral_);
     }
 }
 
@@ -65,39 +69,45 @@ void JetrovControllerNode::ControllerReconfigureCB(
 
 void JetrovControllerNode::ControlESC()
 {
-    int tgt_pulse
-    = linear_.x / CONTROL_FREQUENCY / ENCODER_WHEEL_DIAMETER  / M_PI * ENCODER_RESOLUTION;
-    speed_controller_.SetTargetPulse(tgt_pulse);
+    if(emergency_stop_ != true)
+    {
+        int tgt_pulse
+        = linear_.x / CONTROL_FREQUENCY / ENCODER_WHEEL_DIAMETER  / M_PI * ENCODER_RESOLUTION;
+        speed_controller_.SetTargetPulse(tgt_pulse);
 
-    speed_controller_.ComputeESCOutput();
-    int output = speed_controller_.getOutput();
+        speed_controller_.ComputeESCOutput();
+        int output = speed_controller_.getOutput();
 
-    int output_pwm = map(output, ESC_OUTPUT_MIN, ESC_OUTPUT_MAX, esc_input_min_, esc_input_max_);
-    pca9685->setPWM(1, 0, output_pwm);
+        int output_pwm = map(output, ESC_OUTPUT_MIN, ESC_OUTPUT_MAX, esc_input_min_, esc_input_max_);
+        pca9685->setPWM(ESC_PORT, 0, output_pwm);
+    }
 }
 
 void JetrovControllerNode::ControlSteerServo()
 {
-    if(use_joy_ != true)
+    if(emergency_stop_ != true)
     {
-        double vel = linear_.x;
-        double omega = angular_.z;
+        if(use_joy_ != true)
+        {
+            double vel = linear_.x;
+            double omega = angular_.z;
 
-        steer_controller_.SetLinearVel(vel);
-        steer_controller_.SetAngularVel(omega);
-        steer_controller_.Vel2SteerAngle();
+            steer_controller_.SetLinearVel(vel);
+            steer_controller_.SetAngularVel(omega);
+            steer_controller_.Vel2SteerAngle();
 
-        steer_angle_ = steer_controller_.GetSteerAngle();
+            steer_angle_ = steer_controller_.GetSteerAngle();
+        }
+
+        double output = steer_angle_ / MAX_STEER_ANGLE;
+
+        output = std::min(STEER_SERVO_OUTPUT_MAX, output);
+        output = std::max(STEER_SERVO_OUTPUT_MIN, output);
+
+        int output_pwm = map(output, STEER_SERVO_OUTPUT_MIN,
+                                     STEER_SERVO_OUTPUT_MAX, servo_input_min_, servo_input_max_);
+        pca9685->setPWM(STEER_SERVO_PORT, 0, output_pwm);
     }
-
-    double output = steer_angle_ / MAX_STEER_ANGLE;
-
-    output = std::min(STEER_SERVO_OUTPUT_MAX, output);
-    output = std::max(STEER_SERVO_OUTPUT_MIN, output);
-
-    int output_pwm = map(output, STEER_SERVO_OUTPUT_MIN,
-                                 STEER_SERVO_OUTPUT_MAX, servo_input_min_, servo_input_max_);
-    pca9685->setPWM(0, 0, output_pwm);
 }
 
 void JetrovControllerNode::DesireTwistCB(const geometry_msgs::TwistPtr& twist_msg)
@@ -111,12 +121,16 @@ void JetrovControllerNode::JoyCommandCB(const jetrov_msgs::CommandPtr& cmd_msg)
     linear_ = cmd_msg->linear;
     steer_angle_ = cmd_msg->steer_angle;
     emergency_stop_ = cmd_msg->emergency_stop;
+    if(emergency_stop_ = true)
+    {
+        pca9685->setPWM(STEER_SERVO_PORT, 0, servo_neutral_);
+        pca9685->setPWM(ESC_PORT, 0, esc_neutral_);
+    }
 }
 
 void JetrovControllerNode::CurrentPulseCB(const jetrov_msgs::PulseCountPtr& pulse_msg)
 {
     speed_controller_.SetCurrentPulse(pulse_msg->pulse_count);
-
     ControlESC();
     ControlSteerServo();
 }

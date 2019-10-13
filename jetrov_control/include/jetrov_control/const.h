@@ -26,17 +26,22 @@ static constexpr int PWM_RESOLUTON = 4096;
 static constexpr int CONTROL_FREQUENCY = 50;
 
 //ESC
+static constexpr int ESC_PORT = 1;
 //pulse width micro sec
 static constexpr int ESC_PULSE_WIDTH_MAX = 2000;
 static constexpr int ESC_PULSE_WIDTH_MIN = 1000;
+static constexpr int ESC_NEUTRAL = 1500;
 
 //output range
 static constexpr int ESC_OUTPUT_MAX = 255;
 static constexpr int ESC_OUTPUT_MIN = -255;
 
-//STEER Servo micro sec
+//STEER Servo
+static constexpr int STEER_SERVO_PORT = 0; 
+//micro sec
 static constexpr int STEER_SERVO_PULSE_WIDTH_MAX = 2100;
 static constexpr int STEER_SERVO_PULSE_WIDTH_MIN = 900;
+static constexpr int STEER_SERVO_NEUTRAL = 1500;
 
 //output range
 static constexpr double STEER_SERVO_OUTPUT_MAX = 1;

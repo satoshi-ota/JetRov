@@ -35,8 +35,10 @@ private:
     //pmw
     int esc_input_max_;
     int esc_input_min_;
+    int esc_neutral_;
     int servo_input_max_;
     int servo_input_min_;
+    int servo_neutral_;
 
     double steer_angle_;
 
