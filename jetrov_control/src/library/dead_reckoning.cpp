@@ -51,14 +51,12 @@ void DeadReckoning::ComputeOdometry()
     y_ += delta_y;
     theta_ += delta_theta;
 
-    last_time_ = current_time_;
 }
 
 void DeadReckoning::SetMsg()
 {
     yaw_quat_msg_ = tf::createQuaternionMsgFromYaw(theta_);
 
-    //odom
     odom_msg_.header.stamp = ros::Time::now();
     odom_msg_.header.frame_id = "/odom";
     odom_msg_.child_frame_id = "/base_footprint";
@@ -71,6 +69,19 @@ void DeadReckoning::SetMsg()
     odom_msg_.twist.twist.linear.x = vx_;
     odom_msg_.twist.twist.linear.y = vy_;
     odom_msg_.twist.twist.angular.z = omega_;
+
+    tf_msg_.header.stamp = current_time_;
+    tf_msg_.header.frame_id = "/odom";
+    tf_msg_.child_frame_id = "/base_footprint";
+
+    tf_msg_.transform.translation.x = x_;
+    tf_msg_.transform.translation.y = y_;
+    tf_msg_.transform.translation.z = 0.0;
+    tf_msg_.transform.rotation = yaw_quat_msg_;
+
+    br_.sendTransform(tf_msg_);
+
+    last_time_ = current_time_;
 }
 
 }

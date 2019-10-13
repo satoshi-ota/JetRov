@@ -42,6 +42,8 @@ private:
     ros::Time current_time_, last_time_;
     geometry_msgs::Quaternion yaw_quat_msg_;
     nav_msgs::Odometry odom_msg_;
+    geometry_msgs::TransformStamped tf_msg_;
+    tf::TransformBroadcaster br_;
 
 };
 
