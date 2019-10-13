@@ -11,8 +11,11 @@
 volatile int pulse_count;
 const int pinA = 2;
 const int pinB = 3;
+const int n_calib = 100;
+const int i = 0;
 
 int16_t gyroX, gyroY, gyroZ, ax, ay, az, Temperature;
+int16_t gyroX_off, gyroY_off, gyroZ_off, ax_off, ay_off, az_off;
 
 void enc_changedPinA()
 {
@@ -80,6 +83,30 @@ void setup() {
   Wire.write(MPU6050_PWR_MGMT_1);
   Wire.write(0x00);
   Wire.endTransmission();
+
+  Wire.beginTransmission(0x68);
+  Wire.write(0x3B);
+  Wire.endTransmission(false);
+  Wire.requestFrom(0x68, 14, true);
+  while (Wire.available() < 14);
+
+  while (i < n_calib)
+  {
+      ax_off += Wire.read() << 8 | Wire.read();
+      ay_off += Wire.read() << 8 | Wire.read();
+      az_off += Wire.read() << 8 | Wire.read();
+      Temperature = Wire.read() << 8 | Wire.read();
+      gyroX_off += Wire.read() << 8 | Wire.read();
+      gyroY_off += Wire.read() << 8 | Wire.read();
+      gyroZ_off += Wire.read() << 8 | Wire.read();
+  }
+
+  ax_off = ax_off / n_calib;
+  ay_off = ay_off / n_calib;
+  az_off = ay_off / n_calib;
+  gyroX_off = gyroX_off / n_calib;
+  gyroY_off = gyroY_off / n_calib;
+  gyroZ_off = gyroZ_off / n_calib;
 }
 
 void loop()
@@ -87,7 +114,6 @@ void loop()
   sendImu();
   sendEncoder();
   nh.spinOnce();
-  //delay(20);
 }
 
 void sendEncoder()
@@ -119,12 +145,12 @@ void sendImu()
 
   imu.header.frame_id = "imu_link";
   imu.header.stamp = nh.now();
-  imu.angular_velocity.x = gyroX / 131.0 / 180 * PI;
-  imu.angular_velocity.y = gyroY / 131.0 / 180 * PI;
-  imu.angular_velocity.z = gyroZ / 131.0 / 180 * PI;
-  imu.linear_acceleration.x = ax / 16384.0;
-  imu.linear_acceleration.y = ay / 16384.0;
-  imu.linear_acceleration.z = az / 16384.0;
+  imu.angular_velocity.x = (gyroX - gyroX_off) / 131.0 / 180 * PI;
+  imu.angular_velocity.y = (gyroY - gyroY_off) / 131.0 / 180 * PI;
+  imu.angular_velocity.z = (gyroZ - gyroZ_off) / 131.0 / 180 * PI;
+  imu.linear_acceleration.x = (ax - ax_off) / 16384.0;
+  imu.linear_acceleration.y = (ay - ay_off) / 16384.0;
+  imu.linear_acceleration.z = (az - az_off) / 16384.0;
 
   pub_imu.publish(&imu);
 }
