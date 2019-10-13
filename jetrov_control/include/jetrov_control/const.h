@@ -17,7 +17,7 @@ static constexpr double ENCODER_WHEEL_DIAMETER = 0.05;
 static constexpr int ENCODER_RESOLUTION = 1440;
 
 //safty m/s
-static constexpr double MAX_SPEED = 1.5;
+static constexpr double MAX_SPEED = 0.5;
 
 //pwm resolution
 static constexpr int PWM_RESOLUTON = 4096;
