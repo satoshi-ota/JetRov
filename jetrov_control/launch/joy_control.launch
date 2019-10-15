@@ -1,7 +1,11 @@
 <launch>
+    <!--for debug-->
+    <arg name="reconfig" default="false"/>
     <!--imu_filter_madgwick-->
     <arg name="use_mag" default="false"/>
     <arg name="publish_tf" default="true"/>
+
+    <arg name="rviz" default="true"/>
 
     <node pkg="joy" type="joy_node" name="joy_node"/>
     <node pkg="jetrov_joy_interface" type="joystick_control_node" name="joystick_control_node"/>
@@ -12,7 +16,13 @@
         <param name="publish_tf" value="$(arg publish_tf)"/>
         <remap from="imu/data" to="status/imu"/>
     </node>
-    <node pkg="rqt_reconfigure" type="rqt_reconfigure" name="rqt_reconfigure"/>
-    <node pkg="rviz" type="rviz" name="rviz"/>
 
+    <group if="$(arg reconfig)" >
+        <node pkg="rqt_reconfigure" type="rqt_reconfigure" name="rqt_reconfigure"/>
+    </group>
+
+    <group if="$(arg rviz)" >
+        <node pkg="rviz" type="rviz" name="rviz"/>
+    </group>
+    
 </launch>
