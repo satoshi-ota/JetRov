@@ -71,8 +71,8 @@ void setup() {
   attachInterrupt(0, enc_changedPinA, CHANGE);
   attachInterrupt(1, enc_changedPinB, CHANGE);
 
-  Serial.begin(115200);
-  nh.getHardware()->setBaud(115200);
+  Serial.begin(9600);
+  nh.getHardware()->setBaud(9600);
   nh.initNode();
   nh.advertise(pub_imu);
   nh.advertise(pub_cnt);
