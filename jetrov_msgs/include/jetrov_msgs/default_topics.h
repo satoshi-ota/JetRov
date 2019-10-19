@@ -8,6 +8,8 @@ namespace default_topics{
 static constexpr char COMMAND_VELOCITY[] = "/command/velocity";
 static constexpr char COMMAND_JOY[] = "/command/joy";
 
+static constexpr char RAW_IMU[] = "/imu/data_raw";
+
 // status
 static constexpr char STATUS_PULSE_COUNT[] = "/status/pulse_count";
 static constexpr char STATUS_IMU[] = "/status/imu";
