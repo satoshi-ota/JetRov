@@ -36,12 +36,12 @@ public:
 
     int getError();
 
-    int inline getAccelX(){return accel_x_raw_ / 16384;};
-    int inline getAccelY(){return accel_y_raw_ / 16384;};
-    int inline getAccelZ(){return accel_z_raw_ / 16384;};
-    int inline getGyroX(){return gyro_x_raw_ / 131 / 180 * M_PI;};
-    int inline getGyroY(){return gyro_y_raw_ / 131 / 180 * M_PI;};
-    int inline getGyroZ(){return gyro_z_raw_ / 131 / 180 * M_PI;};
+    double inline getAccelX(){return accel_x_raw_ / 16384;};
+    double inline getAccelY(){return accel_y_raw_ / 16384;};
+    double inline getAccelZ(){return accel_z_raw_ / 16384;};
+    double inline getGyroX(){return gyro_x_raw_ / 131 / 180 * M_PI;};
+    double inline getGyroY(){return gyro_y_raw_ / 131 / 180 * M_PI;};
+    double inline getGyroZ(){return gyro_z_raw_ / 131 / 180 * M_PI;};
 
     unsigned char kI2CBus;         // I2C bus of the MPU6050
     int kI2CFileDescriptor;        // File Descriptor to the MPU6050
