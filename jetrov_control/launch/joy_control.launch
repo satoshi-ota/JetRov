@@ -11,6 +11,7 @@
     <node pkg="jetrov_joy_interface" type="joystick_control_node" name="joystick_control_node"/>
     <node pkg="jetrov_control" type="jetrov_controller_node" name="jetrov_joy_interface"/>
     <node pkg="jetrov_control" type="dead_reckoning_node" name="dead_reckoning_node"/>
+    <node pkg="jetrov_control" type="jetrov_imu_node" name="jetrov_imu_node"/>
     <node pkg="imu_filter_madgwick" type="imu_filter_node" name="imu_filter_node">
         <param name="use_mag" value="$(arg use_mag)"/>
         <param name="publish_tf" value="$(arg publish_tf)"/>
@@ -24,5 +25,5 @@
     <group if="$(arg rviz)" >
         <node pkg="rviz" type="rviz" name="rviz"/>
     </group>
-    
+
 </launch>

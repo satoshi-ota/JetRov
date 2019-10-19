@@ -1,14 +1,27 @@
 <launch>
+    <!--for debug-->
+    <arg name="reconfig" default="false"/>
     <!--imu_filter_madgwick-->
     <arg name="use_mag" default="false"/>
     <arg name="publish_tf" default="true"/>
 
+    <arg name="rviz" default="true"/>
+
     <node pkg="jetrov_control" type="jetrov_controller_node" name="jetrov_controller_node"/>
     <node pkg="jetrov_control" type="dead_reckoning_node" name="dead_reckoning_node"/>
+    <node pkg="jetrov_control" type="jetrov_imu_node" name="jetrov_imu_node"/>
     <node pkg="imu_filter_madgwick" type="imu_filter_node" name="imu_filter_node">
         <param name="use_mag" value="$(arg use_mag)"/>
         <param name="publish_tf" value="$(arg publish_tf)"/>
         <remap from="imu/data" to="status/imu"/>
     </node>
+
+    <group if="$(arg reconfig)" >
+        <node pkg="rqt_reconfigure" type="rqt_reconfigure" name="rqt_reconfigure"/>
+    </group>
+
+    <group if="$(arg rviz)" >
+        <node pkg="rviz" type="rviz" name="rviz"/>
+    </group>
 
 </launch>
