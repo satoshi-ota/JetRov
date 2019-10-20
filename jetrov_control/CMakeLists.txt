@@ -34,6 +34,7 @@ include_directories(include ${catkin_INCLUDE_DIRS})
 add_library(jetrov_control
     src/library/JHPWMPCA9685.cpp
     src/library/MPU6050.cpp
+    src/library/ArduinoI2C.cpp
     src/library/steer_controller.cpp
     src/library/speed_controller.cpp
     src/library/dead_reckoning.cpp)
@@ -56,3 +57,7 @@ target_link_libraries(dead_reckoning_node jetrov_control ${catkin_LIBRARIES})
 add_executable(jetrov_imu_node src/nodes/jetrov_imu_node.cpp)
 add_dependencies(jetrov_imu_node ${catkin_EXPORTED_TARGETS})
 target_link_libraries(jetrov_imu_node jetrov_control ${catkin_LIBRARIES})
+
+add_executable(jetrov_encoder_node src/nodes/jetrov_encoder_node.cpp)
+add_dependencies(jetrov_encoder_node ${catkin_EXPORTED_TARGETS})
+target_link_libraries(jetrov_encoder_node jetrov_control ${catkin_LIBRARIES})
