@@ -27,6 +27,7 @@ private:
     sensor_msgs::Imu imu_msg_;
 
     int hz_;
+    int calibration_loop_;
 
     MPU6050 *mpu6050 = new MPU6050();
 

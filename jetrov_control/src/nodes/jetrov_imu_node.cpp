@@ -9,6 +9,7 @@ JetrovImuNode::JetrovImuNode(
      private_nh_(private_nh)
 {
     private_nh_.param("hz_", hz_, 10);
+    private_nh_.param("calibration_loop_", calibration_loop_, 100);
 
     imu_pub_ = nh_.advertise<sensor_msgs::Imu>
                                     (jetrov_msgs::default_topics::RAW_IMU, 0);
@@ -27,6 +28,8 @@ JetrovImuNode::JetrovImuNode(
 
         mpu6050->writeByte(MPU6050_PWR_MGMT_1, 0x00);
     }
+
+    mpu6050->calibration(calibration_loop_);
 }
 
 JetrovImuNode::~JetrovImuNode()

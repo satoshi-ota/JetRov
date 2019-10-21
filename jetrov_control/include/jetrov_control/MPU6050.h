@@ -23,18 +23,13 @@ public:
     bool openMPU6050();
     void closeMPU6050();
 
-    void calibration();
+    void calibration(int loop);
 
     void readAccel();
-
     void readGyro();
 
-    // Read the given register
     int readByte(int readRegister);
-    // Write the the given value to the given register
     int writeByte(int writeRegister, int writeValue);
-
-    int getError();
 
     double inline getAccelX(){return accel_x_;};
     double inline getAccelY(){return accel_y_;};

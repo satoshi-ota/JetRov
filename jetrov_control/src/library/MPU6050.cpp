@@ -43,9 +43,37 @@ void MPU6050::closeMPU6050()
     }
 }
 
-void MPU6050::calibration()
+void MPU6050::calibration(int loop)
 {
+    int ax, ay, az, gx, gy, gz;
 
+    for(unsigned int i; i < loop; i++)
+    {
+        readAccel();
+        ax += accel_x_raw_;
+        ay += accel_y_raw_;
+        az += accel_z_raw_;
+
+        readGyro();
+        gx += gyro_x_raw_;
+        gy += gyro_y_raw_;
+        gz += gyro_z_raw_;
+    }
+
+    accel_x_offset_ = ax / loop;
+    accel_y_offset_ = ay / loop;
+    accel_z_offset_ = az / loop;
+
+    gyro_x_offset_ = gx / loop;
+    gyro_y_offset_ = gy / loop;
+    gyro_z_offset_ = gz / loop;
+
+    printf("OFFSET Accel X: %d\n", accel_x_offset_);
+    printf("OFFSET Accel Y: %d\n", accel_y_offset_);
+    printf("OFFSET Accel Z: %d\n", accel_z_offset_);
+    printf("OFFSET Gyro X: %d\n", gyro_x_offset_);
+    printf("OFFSET Gyro Y: %d\n", gyro_y_offset_);
+    printf("OFFSET Gyro Z: %d\n", gyro_z_offset_);
 }
 
 int MPU6050::readByte(int readRegister)
