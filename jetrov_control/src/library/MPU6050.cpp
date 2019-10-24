@@ -109,8 +109,8 @@ void MPU6050::readAccel()
     accel_z_raw_  = readByte(MPU6050_ACCEL_ZOUT_H) << 8;
     accel_z_raw_ |= readByte(MPU6050_ACCEL_ZOUT_L);
 
-    accel_x_ = accel_x_raw_ / 16384.0;
-    accel_y_ = accel_y_raw_ / 16384.0;
+    accel_x_ = (accel_x_raw_ - accel_x_offset_) / 16384.0;
+    accel_y_ = (accel_y_raw_ - accel_y_offset_) / 16384.0;
     accel_z_ = accel_z_raw_ / 16384.0;
     //for debugging
     //printf("Accel X: %lf\n", accel_x_);
@@ -125,7 +125,7 @@ void MPU6050::readGyro()
     gyro_z_raw_  = readByte(MPU6050_GYRO_ZOUT_H) << 8;
     gyro_z_raw_ |= readByte(MPU6050_GYRO_ZOUT_L);
 
-    gyro_x_ = gyro_x_raw_ / 131.0 / 180 * M_PI;
-    gyro_y_ = gyro_y_raw_ / 131.0 / 180 * M_PI;
-    gyro_z_ = gyro_z_raw_ / 131.0 / 180 * M_PI;
+    gyro_x_ = (gyro_x_raw_ - gyro_x_offset_) / 131.0 / 180 * M_PI;
+    gyro_y_ = (gyro_y_raw_ - gyro_y_offset_) / 131.0 / 180 * M_PI;
+    gyro_z_ = (gyro_z_raw_ - gyro_z_offset_) / 131.0 / 180 * M_PI;
 }
